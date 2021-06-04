@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0efcae572a8fdea47b573eb942c88af4, type: 3}
+  m_Name: MockStaticData
+  m_EditorClassIdentifier: 
+  staticDataInfoPackage:
+    Heroes:
+    - SDID: Mega_Sunny
+      Name: Sunny
+      Rarity: 5
+      RequiredExperienceToLevelUp: 640000002c0100002003000014050000d0070000
+      RequiredLevelsToUnlockAbilitieSlots: 02000000030000000400000005000000
+      BlackListItemsCompatibility: []
+      HeroType: 1
+      MainImagePath: Assets/ViewGamePackage/External/GUI Kit Casual Game/ResourcesData/Sprite/Play/play_character_sample_0.png
+      BackgroundPath: Assets/ViewGamePackage/External/GUI Kit Casual Game/ResourcesData/Sprite/Character_List_Select/character_list_frame_purple.png
+      GlowColor: {r: 0.69803923, g: 0.38823533, b: 1, a: 1}
+    - SDID: Dumb_Sunny
+      Name: Sunny
+      Rarity: 5
+      RequiredExperienceToLevelUp: 640000002c0100002003000014050000d0070000
+      RequiredLevelsToUnlockAbilitieSlots: 02000000030000000400000005000000
+      BlackListItemsCompatibility: []
+      HeroType: 2
+      MainImagePath: Assets/ViewGamePackage/External/GUI Kit Casual Game/ResourcesData/Sprite/Play/play_character_sample_6.png
+      BackgroundPath: Assets/ViewGamePackage/External/GUI Kit Casual Game/ResourcesData/Sprite/Character_List_Select/character_list_frame_orange.png
+      GlowColor: {r: 0.9056604, g: 0.6420444, b: 0.24350302, a: 1}
+    - SDID: Dumb_Victor
+      Name: Victor
+      Rarity: 3
+      RequiredExperienceToLevelUp: 640000002c0100002003000014050000d0070000
+      RequiredLevelsToUnlockAbilitieSlots: 02000000030000000400000005000000
+      BlackListItemsCompatibility: []
+      HeroType: 0
+      MainImagePath: Assets/ViewGamePackage/External/GUI Kit Casual Game/ResourcesData/Sprite/Play/play_character_sample_3.png
+      BackgroundPath: Assets/ViewGamePackage/External/GUI Kit Casual Game/ResourcesData/Sprite/Character_List_Select/character_list_frame_dim.png
+      GlowColor: {r: 0.23335704, g: 0.38129374, b: 0.8679245, a: 1}
+    - SDID: Dumb_Cannon
+      Name: Cannon
+      Rarity: 2
+      RequiredExperienceToLevelUp: 640000002c0100002003000014050000d0070000
+      RequiredLevelsToUnlockAbilitieSlots: 02000000030000000400000005000000
+      BlackListItemsCompatibility: []
+      HeroType: 1
+      MainImagePath: Assets/ViewGamePackage/External/GUI Kit Casual Game/ResourcesData/Sprite/Character_List_Select/character_sample_9.png
+      BackgroundPath: Assets/ViewGamePackage/External/GUI Kit Casual Game/ResourcesData/Sprite/Character_List_Select/character_list_frame_orange.png
+      GlowColor: {r: 0.98039216, g: 0.7193772, b: 0.20784315, a: 1}
+    - SDID: Dumb_Dobby
+      Name: Dooby
+      Rarity: 1
+      RequiredExperienceToLevelUp: 640000002c0100002003000014050000d0070000
+      RequiredLevelsToUnlockAbilitieSlots: 02000000030000000400000005000000
+      BlackListItemsCompatibility: []
+      HeroType: 2
+      MainImagePath: Assets/ViewGamePackage/External/GUI Kit Casual Game/ResourcesData/Sprite/Play/play_character_sample_5.png
+      BackgroundPath: Assets/ViewGamePackage/External/GUI Kit Casual Game/ResourcesData/Sprite/Character_List_Select/character_list_frame_green.png
+      GlowColor: {r: 0.2082592, g: 0.9811321, b: 0.43015015, a: 1}
+    Stages:
+    - SDID: Mock_Start
+      Title: First Phase
+      MainImagePath: Assets/ViewGamePackage/External/GUI Kit Casual Game/ResourcesData/Sprite/Stage/stage_theme_icon_city.png
+      LevelRequired: 0
+      RootStageElements:
+        ElementType: 0
+        ConnectedElements:
+        - ElementType: 0
+          ConnectedElements:
+          - ElementType: 0
+            ConnectedElements: []
+          - ElementType: 0
+            ConnectedElements:
+            - ElementType: 2
+              ConnectedElements: []
+            - ElementType: 3
+              ConnectedElements: []
