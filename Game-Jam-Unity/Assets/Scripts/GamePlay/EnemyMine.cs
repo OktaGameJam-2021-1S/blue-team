@@ -15,7 +15,7 @@ public class EnemyMine : Enemy
         ground = GameObject.FindWithTag("Ground").transform;
         position = ground.TransformPoint(Random.Range(0.40f, 0.6f), 0, 0);
     }
-
+    
     public override void Movement()
     {
         if (position.x >= transform.position.x)

@@ -198,7 +198,7 @@ MonoBehaviour:
   - {fileID: 9071284396833052349, guid: 4383c51d4dd9b9248bc6effe911a3846, type: 3}
   - {fileID: 6494651575097535038, guid: f32628099d1dd4c4bae2fa9c5791e884, type: 3}
   GroundsPrefabs:
-  - {fileID: 7562092060012431398, guid: 68c916ff723426e4497db1a600ac3a3f, type: 3}
+  - {fileID: 840549259621160668, guid: e3aaa554803118740ac747359b461a28, type: 3}
   ElementsToSpawn: 
   ElementsPrefabs:
   - {fileID: 3891167671881957318, guid: bb6f8d070a4d0f248922aa94011d290d, type: 3}
@@ -208,6 +208,7 @@ MonoBehaviour:
   PoolElements: []
   Grounds: []
   YGround: 1
+  YObstacle: 2
   startAmountGround: 5
   Score: 0
 --- !u!4 &45736085
