@@ -56,7 +56,6 @@ namespace GamePlay
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
             
-            StartCoroutine(SpawnGrounds());
         }
 
         public override void OnDisable()
@@ -202,14 +201,18 @@ namespace GamePlay
             CheckEndOfGame();
         }
 
-        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
         {
-            if (changedProps.ContainsKey(K.GamePlay.PLAYER_LIVES))
+            base.OnRoomPropertiesUpdate(propertiesThatChanged);
+            if (propertiesThatChanged.ContainsKey(K.GamePlay.PLAYER_LIVES))
             {
                 CheckEndOfGame();
                 return;
             }
+        }
 
+        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        {
             if (!PhotonNetwork.IsMasterClient)
             {
                 return;
@@ -298,39 +301,19 @@ namespace GamePlay
         {
             bool allDestroyed = true;
 
-            foreach (Player p in PhotonNetwork.PlayerList)
+            if (PhotonNetwork.IsMasterClient)
             {
                 object lives;
-                if (p.CustomProperties.TryGetValue(K.GamePlay.PLAYER_LIVES, out lives))
+                if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(K.GamePlay.PLAYER_LIVES, out lives))
                 {
-                    if ((int) lives > 0)
+                    if ((int) lives <= 0)
                     {
-                        allDestroyed = false;
-                        break;
-                    }
-                }
-            }
-
-            if (allDestroyed)
-            {
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    StopAllCoroutines();
-                }
-
-                string winner = "";
-                int score = -1;
-
-                foreach (Player p in PhotonNetwork.PlayerList)
-                {
-                    if (p.GetScore() > score)
-                    {
-                        winner = p.NickName;
-                        score = p.GetScore();
+                        Debug.Log("FIM DO JOGO");
+                        StopAllCoroutines();
                     }
                 }
 
-                StartCoroutine(EndOfGame(winner, score));
+
             }
         }
 

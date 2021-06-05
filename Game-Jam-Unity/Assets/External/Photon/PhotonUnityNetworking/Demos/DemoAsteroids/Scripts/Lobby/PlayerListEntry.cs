@@ -44,7 +44,7 @@ namespace Photon.Pun.Demo.Asteroids
             }
             else
             {
-                Hashtable initialProps = new Hashtable() {{AsteroidsGame.PLAYER_READY, isPlayerReady}, {AsteroidsGame.PLAYER_LIVES, AsteroidsGame.PLAYER_MAX_LIVES}};
+                Hashtable initialProps = new Hashtable() {{AsteroidsGame.PLAYER_READY, isPlayerReady}};
                 PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
                 PhotonNetwork.LocalPlayer.SetScore(0);
 
@@ -61,6 +61,12 @@ namespace Photon.Pun.Demo.Asteroids
                         FindObjectOfType<LobbyMainPanel>().LocalPlayerPropertiesUpdated();
                     }
                 });
+            }
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Hashtable initialProps = new Hashtable() {{AsteroidsGame.PLAYER_LIVES, AsteroidsGame.PLAYER_MAX_LIVES}};
+                PhotonNetwork.CurrentRoom.SetCustomProperties(initialProps);
             }
         }
 
