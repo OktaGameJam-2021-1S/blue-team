@@ -42,16 +42,18 @@ public class PlayerWizard : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CastMagic(m_eCurrentMagicType);
-            rigidbody.velocity = Vector3.zero;
-        }
+
         if (!photonView.IsMine)
         {
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CastMagic(m_eCurrentMagicType);
+            rigidbody.velocity = Vector3.zero;
+        }
+        
         if (!controllable || m_bIsCasting)
         {
             return;
