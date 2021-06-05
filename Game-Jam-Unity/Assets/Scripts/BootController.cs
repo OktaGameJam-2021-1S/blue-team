@@ -61,7 +61,7 @@ public class BootController : MonoBehaviour
     
     IEnumerator StartGame(BootOutput pOutput)
     {
-        var initialView = pOutput.session.UIViewManager.GetScreen<LoginView>();
+        var initialView = pOutput.session.UIViewManager.GetScreen<SampleView>();
         
         initialView.SetupDependency(pOutput.session, pOutput.session.UIViewController, pOutput.session.UIViewManager);
         
