@@ -41,15 +41,7 @@ public class PlayerRunner : MonoBehaviour
         collider = GetComponent<Collider>();
         renderer = GetComponent<Renderer>();
     }
-
-    public void Start()
-    {
-        foreach (Renderer r in GetComponentsInChildren<Renderer>())
-        {
-            r.material.color = AsteroidsGame.GetColor(photonView.Owner.GetPlayerNumber());
-        }
-    }
-
+    
     public void FixedUpdate()
     {
         if (!photonView.IsMine)

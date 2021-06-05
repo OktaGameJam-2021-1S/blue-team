@@ -8,6 +8,9 @@ TagManager:
   - SpawnPointWizard
   - DestroyGround
   - Ground
+  - FxTemporaire
+  - Enemy
+  - DestroyElement
   layers:
   - Default
   - TransparentFX
