@@ -10,6 +10,7 @@ public class PlayerWizard : MonoBehaviour
     public float RotationSpeed = 90.0f;
     public float MovementSpeed = 2.0f;
     public float MaxSpeed = 0.2f;
+    public UIWizardView m_pUIWizardView;
 
     public ParticleSystem Destruction;
     public GameObject EngineTrail;
@@ -23,11 +24,10 @@ public class PlayerWizard : MonoBehaviour
     private new Renderer renderer;
 #pragma warning restore 0109
 
-    private float rotation = 0.0f;
-    private float acceleration = 0.0f;
-    private float shootingTimer = 0.0f;
-
     private bool controllable = true;
+    private bool m_bIsCasting = false;
+    private MagicType m_eCurrentMagicType = MagicType.None;
+
 
     #region UNITY
 
@@ -56,13 +56,47 @@ public class PlayerWizard : MonoBehaviour
             return;
         }
 
-        if (!controllable)
+        if (!controllable || m_bIsCasting)
         {
             return;
         }
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         rigidbody.velocity = new Vector3(horizontal, 0, 0) * MovementSpeed * Time.fixedDeltaTime;
+
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CastMagic(m_eCurrentMagicType);
+            rigidbody.velocity = Vector3.zero;
+        }
+    }
+
+    public void CastMagic(MagicType eMagicType)
+    {
+        if (m_bIsCasting)
+        {
+            return;
+        }
+        m_bIsCasting = true;
+        StartCoroutine(CastMagicCoroutine(eMagicType));
+    }
+
+
+    public IEnumerator CastMagicCoroutine(MagicType eMagicType)
+    {
+        switch (eMagicType)
+        {
+            case MagicType.None: //for debug purpose
+            case MagicType.Firebolt:
+                yield return StartCoroutine(m_pUIWizardView.ShowVerticalTargetSelector());
+                m_bIsCasting = false;
+                break;
+        }
+        yield break;
     }
 
     #endregion
@@ -78,4 +112,12 @@ public class PlayerWizard : MonoBehaviour
 
     #endregion
     
+}
+
+public enum MagicType
+{
+    None,
+    Firebolt,
+    Fireball,
+
 }
