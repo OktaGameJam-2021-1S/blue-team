@@ -43,22 +43,23 @@ public class PlayerWizard : MonoBehaviour
         m_gRunner = GameObject.FindGameObjectWithTag("Player");
     }
 
-    public void Start()
-    {
-        foreach (Renderer r in GetComponentsInChildren<Renderer>())
-        {
-            r.material.color = AsteroidsGame.GetColor(photonView.Owner.GetPlayerNumber());
-        }
-    }
 
-  
-    public void FixedUpdate()
+
+
+    private void FixedUpdate()
     {
+
         if (!photonView.IsMine)
         {
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CastMagic(m_eCurrentMagicType);
+            rigidbody.velocity = Vector3.zero;
+        }
+        
         if (!controllable || m_bIsCasting)
         {
             return;
@@ -66,16 +67,6 @@ public class PlayerWizard : MonoBehaviour
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         rigidbody.velocity = new Vector3(horizontal, 0, 0) * MovementSpeed * Time.fixedDeltaTime;
-
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CastMagic(m_eCurrentMagicType);
-            rigidbody.velocity = Vector3.zero;
-        }
     }
 
     public void CastMagic(SpellType eMagicType)
