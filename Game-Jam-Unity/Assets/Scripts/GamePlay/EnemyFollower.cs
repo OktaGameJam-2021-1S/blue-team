@@ -6,7 +6,6 @@ public class EnemyFollower : Enemy
 {
     private Transform player;
 
-    private int RangeZ = 5;
 
     private bool Upper;
     
@@ -20,10 +19,8 @@ public class EnemyFollower : Enemy
     {
         base.Movement();
         
-        if (transform.position.z > RangeZ && Upper || transform.position.z < -RangeZ && !Upper)
-            Upper = !Upper;
-        
-        rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, Time.fixedDeltaTime * velocityMultiplier  * (Upper ?  10 : -10) );
+
+        rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, Time.fixedDeltaTime * velocityMultiplier  * (transform.position.z < player.transform.position.z  ?  300 : -300) );
 
         
     }

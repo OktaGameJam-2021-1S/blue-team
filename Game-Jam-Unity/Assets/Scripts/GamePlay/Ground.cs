@@ -30,13 +30,13 @@ public class Ground : MonoBehaviour
         collider = GetComponent<Collider>();
     }
     
-    public void Update()
+    public void FixedUpdate()
     {
         if (!photonView.IsMine)
         {
             return;
         }
 
-        rigidbody.velocity = Vector3.left * MovementSpeed * Time.fixedDeltaTime ;
+        rigidbody.velocity = Vector3.left * MovementSpeed * Time.fixedDeltaTime;
     }
 }
