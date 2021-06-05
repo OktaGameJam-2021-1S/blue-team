@@ -25,6 +25,12 @@ namespace GamePlay
 
         public GameObject[] GroundsPrefabs;
 
+        public List<ElementType> ElementsToSpawn = new List<ElementType>();
+
+        public ElementSpawn[] ElementsPrefabs;
+
+        public List<ElementSpawn> PoolElements;
+        
         public List<Ground> Grounds = new List<Ground>();
 
         public int startAmountGround = 5;
@@ -49,6 +55,8 @@ namespace GamePlay
                 {K.GamePlay.PLAYER_LOADED_LEVEL, true}
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+            
+            StartCoroutine(SpawnGrounds());
         }
 
         public override void OnDisable()
@@ -62,9 +70,52 @@ namespace GamePlay
 
         #region COROUTINES
 
-        GameObject GetRandomObject(GameObject[] objs)
+        T GetRandomObject<T>(T[] objs)
         {
             return objs[Random.Range(0, objs.Length)];
+        }
+
+        private IEnumerator SpawnElements()
+        {
+            while (true)
+            {
+                if (ElementsToSpawn.Count > 0)
+                {
+                    yield return new WaitForSeconds(3);
+                    var type = ElementsToSpawn[0];
+                    bool spawnedFromPool = false;
+                    Vector3 position = GetRandomObject(SpawnPointsObstacle).transform.position;
+                    position.y = 2;
+                    for (int i = 0; i < PoolElements.Count; i++)
+                    {
+                        if (PoolElements[i].ElementType == type)
+                        {
+                            PoolElements[i].transform.position = position;
+                            spawnedFromPool = true;
+                            break;
+                        }
+                    }
+
+                    if (!spawnedFromPool)
+                    {
+                        for (int i = 0; i < ElementsPrefabs.Length; i++)
+                        {
+                            if (ElementsPrefabs[i].ElementType == type)
+                            {
+                                GameObject obj = PhotonNetwork.InstantiateRoomObject(
+                                    ElementsPrefabs[i].name,
+                                    position, Quaternion.identity, 0, null);
+                                PoolElements.Add(obj.GetComponent<ElementSpawn>());
+                                break;
+                            }
+                        }
+                   
+                    }
+                    ElementsToSpawn.RemoveAt(0);
+                }
+
+                yield return null;
+            }
         }
         private IEnumerator SpawnGrounds()
         {
@@ -173,6 +224,10 @@ namespace GamePlay
             {
                 if (CheckAllPlayerLoadedLevel())
                 {
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        StartCoroutine(SpawnGrounds());
+                    }
                     if (!startTimeIsSet)
                     {
                         CountdownTimer.SetStartTime();
@@ -209,7 +264,7 @@ namespace GamePlay
 
                 
                 StartCoroutine(SpawnObstacles());
-                StartCoroutine(SpawnGrounds());
+                StartCoroutine(SpawnElements());
             }
             else
             {

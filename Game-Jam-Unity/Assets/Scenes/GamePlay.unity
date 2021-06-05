@@ -194,6 +194,13 @@ MonoBehaviour:
   - {fileID: 8034313354234918603, guid: c1b0eec9b01e3dc49bf3577ca1a3bfac, type: 3}
   GroundsPrefabs:
   - {fileID: 7562092060012431398, guid: 68c916ff723426e4497db1a600ac3a3f, type: 3}
+  ElementsToSpawn: 
+  ElementsPrefabs:
+  - {fileID: 3891167671881957318, guid: bb6f8d070a4d0f248922aa94011d290d, type: 3}
+  - {fileID: 5161230062766443715, guid: 802a971a64312ef439322e1c455ce4a2, type: 3}
+  - {fileID: 7714804385762958802, guid: 2c50c62dec9060a4f84ff0ad117417c1, type: 3}
+  - {fileID: 1302227270908850685, guid: 30c95e3f997c1e84ea6a97ef805c2327, type: 3}
+  PoolElements: []
   Grounds: []
   startAmountGround: 5
 --- !u!4 &45736085
