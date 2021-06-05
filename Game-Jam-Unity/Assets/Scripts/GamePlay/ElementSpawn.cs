@@ -1,6 +1,7 @@
 ﻿
 using System.Collections;
 using System.Collections.Generic;
+using GamePlay;
 using Photon.Pun;
 using Photon.Pun.Demo.Asteroids;
 using Photon.Pun.UtilityScripts;
@@ -53,6 +54,23 @@ public class ElementSpawn : MonoBehaviour
         rigidbody.velocity = Vector3.left * Ground.MovementSpeed * Time.deltaTime ;
     }
 
+    [PunRPC]
+    public void DisableElement()
+    {
+        transform.position = Vector3.down * 1000;
+    }
+
+    public void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (photonView.IsMine)
+            {
+                GamePlayNetworkManager.Instance.ElementsToSpawn.Remove(ElementType);
+                photonView.RPC("DisableElement", RpcTarget.All);
+            }
+        }
+    }
 
     #endregion
 
