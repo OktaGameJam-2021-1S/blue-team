@@ -13,13 +13,16 @@ public class EnemyMine : Enemy
     void Start()
     {
         ground = GameObject.FindWithTag("Ground").transform;
-        position = ground.InverseTransformPoint(Random.Range(0, 0.5f), 0, 0);
+        position = ground.TransformPoint(Random.Range(0.25f, 0.75f), 0, 0);
     }
 
     public override void Movement()
     {
-        if(position.x >= transform.position.x)
+        if (position.x >= transform.position.x)
+        {
+            rigidbody.velocity = Vector3.zero;
             return;
+        }
         base.Movement();
         
     }
