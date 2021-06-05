@@ -34,6 +34,8 @@ namespace GamePlay
         public List<Ground> Grounds = new List<Ground>();
 
         public int startAmountGround = 5;
+
+        public int Score;
         #region UNITY
 
         public void Awake()
@@ -74,6 +76,16 @@ namespace GamePlay
             return objs[Random.Range(0, objs.Length)];
         }
 
+        private IEnumerator CountPoints()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(1);
+
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{K.GamePlay.SCORE, Score}});
+                Score++;
+            }
+        }
         private IEnumerator SpawnElements()
         {
             while (true)
@@ -268,6 +280,7 @@ namespace GamePlay
                 
                 StartCoroutine(SpawnObstacles());
                 StartCoroutine(SpawnElements());
+                StartCoroutine(CountPoints());
             }
             else
             {

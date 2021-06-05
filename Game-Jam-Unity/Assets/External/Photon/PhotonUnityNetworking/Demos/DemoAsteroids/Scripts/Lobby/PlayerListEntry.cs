@@ -65,7 +65,7 @@ namespace Photon.Pun.Demo.Asteroids
 
             if (PhotonNetwork.IsMasterClient)
             {
-                Hashtable initialProps = new Hashtable() {{AsteroidsGame.PLAYER_LIVES, AsteroidsGame.PLAYER_MAX_LIVES}};
+                Hashtable initialProps = new Hashtable() {{AsteroidsGame.PLAYER_LIVES, AsteroidsGame.PLAYER_MAX_LIVES}, {"PlayerScore", 0}};
                 PhotonNetwork.CurrentRoom.SetCustomProperties(initialProps);
             }
         }
