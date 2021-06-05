@@ -5,26 +5,47 @@ using UnityEngine;
 public class UIWizardView : MonoBehaviour
 {
     public GameObject m_gVerticalRotationStart;
+    public TargetMovement m_gTarget;
     public float m_fMaxRotationValue = 30f;
     public float m_fMinRotationValue = -30f;
     public float m_fRotationSpeed = 30f;
 
     private bool valueSelected = false;
     private bool waitingForInput = false;
+    private Camera mainCamera;
 
-    public IEnumerator ShowVerticalTargetSelector()
+    private void Start()
+    {
+        mainCamera = FindObjectOfType<Camera>();
+    }
+
+    public IEnumerator ShowVerticalInputSelector()
     {
         m_gVerticalRotationStart.SetActive(true);
-        var coroutine = SelectVerticalRotation();
-        yield return StartCoroutine(coroutine);
-        float? rotation = coroutine.Current;
+        var verticalRotation = SelectVerticalRotation(m_gVerticalRotationStart.transform);
+        yield return StartCoroutine(verticalRotation);
+        yield return verticalRotation.Current;
         m_gVerticalRotationStart.SetActive(false);
         yield break;
     }
 
-    private IEnumerator<float?> SelectVerticalRotation()
+    public IEnumerator ShowAreaOfEffect(Vector3 targetPosition, float fArea)
     {
-        Transform startTransform = m_gVerticalRotationStart.transform;
+        m_gTarget.gameObject.SetActive(true);
+        m_gTarget.transform.localScale = new Vector3(fArea, 0, fArea);
+        m_gTarget.transform.position = targetPosition;
+        m_gTarget.CanMove = true;
+        var areaOfEffect = SelectAreaOfEffect();
+        yield return StartCoroutine(areaOfEffect);
+        yield return m_gTarget.transform.position;
+        m_gTarget.CanMove = false;
+        m_gTarget.gameObject.SetActive(false);
+        yield break;
+    }
+
+    private IEnumerator SelectVerticalRotation(Transform pViewTransformToRotate)
+    {
+        Transform startTransform = pViewTransformToRotate;
         startTransform.rotation = Quaternion.identity;
         bool rotationSelected = false;
         yield return null;
@@ -42,9 +63,22 @@ public class UIWizardView : MonoBehaviour
                 waitingForInput = false;
             }
             yield return null;
-
         }
+        
         yield return startTransform.localEulerAngles.y;
+        yield break;
+    }
+
+    private IEnumerator SelectAreaOfEffect()
+    {
+        valueSelected = false;
+        yield return null;
+        waitingForInput = true;
+        while (!valueSelected)
+        {
+            yield return null;
+        }
+        waitingForInput = false;
         yield break;
     }
 

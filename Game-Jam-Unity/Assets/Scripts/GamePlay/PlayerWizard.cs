@@ -11,10 +11,7 @@ public class PlayerWizard : MonoBehaviour
     public float MovementSpeed = 2.0f;
     public float MaxSpeed = 0.2f;
     public UIWizardView m_pUIWizardView;
-
-    public ParticleSystem Destruction;
-    public GameObject EngineTrail;
-    public GameObject BulletPrefab;
+    public GameObject m_gVerticalSpellRoot;
 
     private PhotonView photonView;
 
@@ -26,7 +23,7 @@ public class PlayerWizard : MonoBehaviour
 
     private bool controllable = true;
     private bool m_bIsCasting = false;
-    private MagicType m_eCurrentMagicType = MagicType.None;
+    public SpellType m_eCurrentMagicType = SpellType.None;
 
 
     #region UNITY
@@ -75,7 +72,7 @@ public class PlayerWizard : MonoBehaviour
         }
     }
 
-    public void CastMagic(MagicType eMagicType)
+    public void CastMagic(SpellType eMagicType)
     {
         if (m_bIsCasting)
         {
@@ -86,13 +83,36 @@ public class PlayerWizard : MonoBehaviour
     }
 
 
-    public IEnumerator CastMagicCoroutine(MagicType eMagicType)
+    public IEnumerator CastMagicCoroutine(SpellType eMagicType)
     {
+        IEnumerator coroutineView = null;
         switch (eMagicType)
         {
-            case MagicType.None: //for debug purpose
-            case MagicType.Firebolt:
-                yield return StartCoroutine(m_pUIWizardView.ShowVerticalTargetSelector());
+            case SpellType.Firebolt:
+                coroutineView = m_pUIWizardView.ShowVerticalInputSelector();
+                yield return StartCoroutine(coroutineView);
+                float? verticalRotationValue = (float)coroutineView.Current;
+                if (verticalRotationValue.HasValue)
+                {
+                    m_gVerticalSpellRoot.transform.localEulerAngles = new Vector3(m_gVerticalSpellRoot.transform.localEulerAngles.x, verticalRotationValue.Value, m_gVerticalSpellRoot.transform.localEulerAngles.x);
+                }
+                m_bIsCasting = false;
+                break;
+
+            case SpellType.Fireball:
+                {
+                    coroutineView = m_pUIWizardView.ShowAreaOfEffect(m_gVerticalSpellRoot.transform.position, 3);
+                    yield return StartCoroutine(coroutineView);
+                    Vector3? targetPosition = (Vector3)coroutineView.Current;
+                    if (targetPosition.HasValue)
+                    {
+                        //CAST SPELL IN THE AREA
+                    }
+                    m_bIsCasting = false;
+                    break;
+                }
+
+            default:
                 m_bIsCasting = false;
                 break;
         }
@@ -114,7 +134,7 @@ public class PlayerWizard : MonoBehaviour
     
 }
 
-public enum MagicType
+public enum SpellType
 {
     None,
     Firebolt,
