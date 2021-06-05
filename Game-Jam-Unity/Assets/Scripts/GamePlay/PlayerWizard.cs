@@ -13,6 +13,8 @@ public class PlayerWizard : MonoBehaviour
     public UIWizardView m_pUIWizardView;
     public GameObject m_gVerticalSpellRoot;
 
+    public WizardCastMagic WizardCastMagic;
+    
     private PhotonView photonView;
 
 #pragma warning disable 0109
@@ -64,7 +66,7 @@ public class PlayerWizard : MonoBehaviour
         {
             return;
         }
-
+        
         float horizontal = Input.GetAxisRaw("Horizontal");
         rigidbody.velocity = new Vector3(horizontal, 0, 0) * MovementSpeed * Time.fixedDeltaTime;
     }
