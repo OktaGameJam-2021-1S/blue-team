@@ -193,6 +193,10 @@ MonoBehaviour:
   ObstaclesPrefabs:
   - {fileID: 1706693315848752071, guid: e30c8211c202b234294a2ab7494530ae, type: 3}
   - {fileID: 8034313354234918603, guid: c1b0eec9b01e3dc49bf3577ca1a3bfac, type: 3}
+  - {fileID: 716068070286107549, guid: c2594b2fa01d1494db4e887a2f421ee4, type: 3}
+  - {fileID: 6134487316593556311, guid: 40605bf20e3e7a0459d19af3f7e7bc40, type: 3}
+  - {fileID: 9071284396833052349, guid: 4383c51d4dd9b9248bc6effe911a3846, type: 3}
+  - {fileID: 6494651575097535038, guid: f32628099d1dd4c4bae2fa9c5791e884, type: 3}
   GroundsPrefabs:
   - {fileID: 7562092060012431398, guid: 68c916ff723426e4497db1a600ac3a3f, type: 3}
   ElementsToSpawn: 
@@ -1596,7 +1600,7 @@ GameObject:
   - component: {fileID: 1000009482204627}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1682,6 +1686,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1862796279831559311, guid: 68c916ff723426e4497db1a600ac3a3f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 29.98
+      objectReference: {fileID: 0}
     - target: {fileID: 7562092060012431398, guid: 68c916ff723426e4497db1a600ac3a3f,
         type: 3}
       propertyPath: m_Name
