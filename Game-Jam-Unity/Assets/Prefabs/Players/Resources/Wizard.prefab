@@ -545,6 +545,8 @@ MonoBehaviour:
   m_pUIWizardView: {fileID: 4132528014213580451}
   m_gVerticalSpellRoot: {fileID: 3380876357584537725}
   WizardCastMagic: {fileID: 2065853193}
+  Elements: 00000000010000000200000003000000
+  SelectedElements: 
   m_eCurrentMagicType: 3
   m_fCastTimeInSeconds: 1
   m_fflamethrowerTimeInSeconds: 2
@@ -568,7 +570,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 674484976}
-  sceneViewId: 2
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &674484976

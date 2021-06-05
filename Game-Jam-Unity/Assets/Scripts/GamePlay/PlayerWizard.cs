@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GamePlay;
 using Photon.Pun;
 using Photon.Pun.Demo.Asteroids;
 using Photon.Pun.UtilityScripts;
@@ -14,7 +15,9 @@ public class PlayerWizard : MonoBehaviour
     public GameObject m_gVerticalSpellRoot;
 
     public WizardCastMagic WizardCastMagic;
-    
+
+    public List<ElementType> Elements;
+    public List<ElementType> SelectedElements;
     private PhotonView photonView;
 
 #pragma warning disable 0109
@@ -55,10 +58,17 @@ public class PlayerWizard : MonoBehaviour
         {
             return;
         }
-
+        SelectElement();
+   
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CastMagic(m_eCurrentMagicType);
+         
+            // CastMagic(m_eCurrentMagicType);
+            if(SelectedElements.Count == 0)
+                return;
+            CastMagic(WizardCastMagic.CastSpell(SelectedElements.ToArray()));
+            GamePlayNetworkManager.Instance.ElementsToSpawn.AddRange(SelectedElements);
+            SelectedElements.Clear();
             rigidbody.velocity = Vector3.zero;
         }
         
@@ -71,6 +81,39 @@ public class PlayerWizard : MonoBehaviour
         rigidbody.velocity = new Vector3(horizontal, 0, 0) * MovementSpeed * Time.fixedDeltaTime;
     }
 
+    private void SelectElement()
+    {
+        ElementType element = GetElementType();
+        if (element != ElementType.None)
+        {
+            if (Elements.Contains(element) && SelectedElements.Count <= 2)
+            {
+                SelectedElements.Add(element);
+                Elements.Remove(element);
+            }
+        }
+    }
+    private ElementType GetElementType()
+    {
+        if (Input.GetKeyDown(KeyCode.Keypad0) || Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            return ElementType.Fire;
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            return ElementType.Water;
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            return ElementType.Air;
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            return ElementType.Earth;
+        }
+
+        return ElementType.None;
+    }
     public void CastMagic(SpellType eMagicType)
     {
         if (m_bIsCasting)

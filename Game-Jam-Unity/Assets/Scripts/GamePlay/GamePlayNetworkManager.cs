@@ -33,6 +33,8 @@ namespace GamePlay
         
         public List<Ground> Grounds = new List<Ground>();
 
+        public float YGround = 1f;
+        
         public int startAmountGround = 5;
 
         public int Score;
@@ -143,7 +145,9 @@ namespace GamePlay
             }
             for (int i = 0; i < startAmountGround; i++)
             {
-                GameObject obj = PhotonNetwork.InstantiateRoomObject(GetRandomObject(GroundsPrefabs).name, GetPositionToSpawn(), Quaternion.identity, 0, null);
+                var position = GetPositionToSpawn();
+                position.y = YGround;
+                GameObject obj = PhotonNetwork.InstantiateRoomObject(GetRandomObject(GroundsPrefabs).name, position,  Quaternion.identity, 0, null);
                 Grounds.Add(obj.GetComponent<Ground>());
             }
 
@@ -151,7 +155,9 @@ namespace GamePlay
             {
                 if (Grounds[1].rightLink.position.x < 0)
                 {
-                    Grounds[0].transform.position = GetPositionToSpawn();
+                    var position = GetPositionToSpawn();
+                    position.y = YGround;
+                    Grounds[0].transform.position = position;
                     Grounds.Add(Grounds[0]);
                     Grounds.RemoveAt(0);
                 }

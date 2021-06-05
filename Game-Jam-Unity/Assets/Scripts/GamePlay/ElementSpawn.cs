@@ -12,7 +12,8 @@ public enum ElementType
     Air,
     Fire,
     Water,
-    Earth
+    Earth,
+    None
 }
 public class ElementSpawn : MonoBehaviour
 {
@@ -68,6 +69,14 @@ public class ElementSpawn : MonoBehaviour
             {
                 GamePlayNetworkManager.Instance.ElementsToSpawn.Remove(ElementType);
                 photonView.RPC("DisableElement", RpcTarget.All);
+            }
+        }
+
+        if (collision.gameObject.CompareTag("DestroyElement"))
+        {
+            if (photonView.IsMine)
+            {
+                GamePlayNetworkManager.Instance.ElementsToSpawn.Add(ElementType);
             }
         }
     }
