@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 674484977}
   - component: {fileID: 674484976}
   - component: {fileID: 674484975}
+  - component: {fileID: 2065853193}
   m_Layer: 0
   m_Name: Wizard
   m_TagString: Untagged
@@ -543,7 +544,7 @@ MonoBehaviour:
   MaxSpeed: 0.1
   m_pUIWizardView: {fileID: 4132528014213580451}
   m_gVerticalSpellRoot: {fileID: 3380876357584537725}
-  StartElements: 
+  WizardCastMagic: {fileID: 2065853193}
   m_eCurrentMagicType: 3
   m_fCastTimeInSeconds: 1
   m_fflamethrowerTimeInSeconds: 2
@@ -567,7 +568,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 674484976}
-  sceneViewId: 0
+  sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &674484976
@@ -602,6 +603,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2065853193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7445441748054850368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b822e4c8b85007640b9f141f140f4798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ValidCasts:
+  - ElementsRequired: 0100000000000000
+    CastType: 3
 --- !u!1 &8415927555579472842
 GameObject:
   m_ObjectHideFlags: 0
