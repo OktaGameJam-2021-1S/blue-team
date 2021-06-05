@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4064663571011357505}
   - component: {fileID: 4064663571011357506}
   - component: {fileID: 1452855307}
+  - component: {fileID: 8618437874223375206}
   - component: {fileID: 1452855306}
   - component: {fileID: 1452855305}
   m_Layer: 0
@@ -110,8 +111,26 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &8618437874223375206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4064663571011357507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c91e648d59bdad94996e4d336bb68d0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationSpeed: 90
+  MovementSpeed: 2
+  MaxSpeed: 0.2
+  Destruction: {fileID: 0}
+  EngineTrail: {fileID: 0}
+  BulletPrefab: {fileID: 0}
 --- !u!114 &1452855306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,5 +168,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
+  m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
