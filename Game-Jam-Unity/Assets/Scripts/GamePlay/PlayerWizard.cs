@@ -23,7 +23,12 @@ public class PlayerWizard : MonoBehaviour
 
     private bool controllable = true;
     private bool m_bIsCasting = false;
+    private GameObject m_gRunner;
     public SpellType m_eCurrentMagicType = SpellType.None;
+
+    [Header("Spell Related")]
+    public float m_fCastTimeInSeconds = 1f;
+    public float m_fflamethrowerTimeInSeconds = 2f;
 
 
     #region UNITY
@@ -35,6 +40,7 @@ public class PlayerWizard : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
         renderer = GetComponent<Renderer>();
+        m_gRunner = GameObject.FindGameObjectWithTag("Player");
     }
 
     public void Start()
@@ -89,15 +95,17 @@ public class PlayerWizard : MonoBehaviour
         switch (eMagicType)
         {
             case SpellType.Firebolt:
-                coroutineView = m_pUIWizardView.ShowVerticalInputSelector();
-                yield return StartCoroutine(coroutineView);
-                float? verticalRotationValue = (float)coroutineView.Current;
-                if (verticalRotationValue.HasValue)
                 {
-                    m_gVerticalSpellRoot.transform.localEulerAngles = new Vector3(m_gVerticalSpellRoot.transform.localEulerAngles.x, verticalRotationValue.Value, m_gVerticalSpellRoot.transform.localEulerAngles.x);
+                    coroutineView = m_pUIWizardView.ShowVerticalInputSelector();
+                    yield return StartCoroutine(coroutineView);
+                    float? verticalRotationValue = (float)coroutineView.Current;
+                    if (verticalRotationValue.HasValue)
+                    {
+                        m_gVerticalSpellRoot.transform.localEulerAngles = new Vector3(m_gVerticalSpellRoot.transform.localEulerAngles.x, verticalRotationValue.Value, m_gVerticalSpellRoot.transform.localEulerAngles.x);
+                    }
+                    m_bIsCasting = false;
+                    break;
                 }
-                m_bIsCasting = false;
-                break;
 
             case SpellType.Fireball:
                 {
@@ -108,6 +116,13 @@ public class PlayerWizard : MonoBehaviour
                     {
                         //CAST SPELL IN THE AREA
                     }
+                    m_bIsCasting = false;
+                    break;
+                }
+
+            case SpellType.Flamethrower:
+                {
+                    yield return StartCoroutine(CastFlamethrower(GetRunner().transform));
                     m_bIsCasting = false;
                     break;
                 }
@@ -131,7 +146,29 @@ public class PlayerWizard : MonoBehaviour
     }
 
     #endregion
-    
+
+    #region SPELLS
+    public IEnumerator CastFlamethrower(Transform pParentTransform)
+    {
+        //CASTING
+        yield return new WaitForSeconds(m_fCastTimeInSeconds);
+
+        GameObject obj = PhotonNetwork.InstantiateRoomObject("FlameThrower", pParentTransform.position, Quaternion.identity, 0, null);
+
+        obj.GetComponent<TargetFollower>().Target = pParentTransform;
+        yield return new WaitForSeconds(m_fflamethrowerTimeInSeconds);
+        Destroy(obj);
+        yield break;
+    }
+    #endregion
+    private GameObject GetRunner()
+    {
+        if(m_gRunner == null)
+        {
+            m_gRunner = GameObject.FindGameObjectWithTag("Player");
+        }
+        return m_gRunner;
+    }
 }
 
 public enum SpellType
@@ -139,5 +176,6 @@ public enum SpellType
     None,
     Firebolt,
     Fireball,
+    Flamethrower,
 
 }

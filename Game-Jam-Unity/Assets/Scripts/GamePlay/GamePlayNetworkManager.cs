@@ -82,8 +82,13 @@ namespace GamePlay
             {
                 yield return new WaitForSeconds(0.1f);
 
+                object score;
+                if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(K.GamePlay.SCORE, out score))
+                {
+                    Score = (int)score +1;
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable { { K.GamePlay.SCORE, Score } });
+                }
                 PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{K.GamePlay.SCORE, Score}});
-                Score++;
             }
         }
         private IEnumerator SpawnElements()
@@ -283,7 +288,6 @@ namespace GamePlay
                 StartCoroutine(SpawnElements());
                 StartCoroutine(CountPoints());
             }
-            else
             {
                 Vector3 position = SpawnPointRunner.position;
                 Quaternion rotation = Quaternion.Euler(0.0f, 0, 0.0f);
