@@ -32,11 +32,8 @@ public class DealDamageWhenInsideCollider : MonoBehaviour
                     }
 
                     enemiesToTakeDamage.Add(enemy);
-                    if (damagePerTimeCoroutine == null)
-                    {
-                        StartCoroutine(DealDamagePerSecond());
-                    }
 
+                    damagePerTimeCoroutine = StartCoroutine(DealDamagePerSecond());
                 }
 
             }
@@ -61,7 +58,7 @@ public class DealDamageWhenInsideCollider : MonoBehaviour
 
                     if (damagePerTimeCoroutine == null)
                     {
-                        StartCoroutine(DealDamagePerSecond());
+                        damagePerTimeCoroutine = StartCoroutine(DealDamagePerSecond());
                     }
                 }
 
