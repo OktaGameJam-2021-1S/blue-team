@@ -60,7 +60,7 @@ public class Obstacle : MonoBehaviour
             return;
         }
 
-        rigidbody.velocity = Vector3.left * MovementSpeed * Time.fixedDeltaTime ;
+        rigidbody.velocity = Vector3.left * Ground.MovementSpeed * Time.fixedDeltaTime ;
 
    
     }

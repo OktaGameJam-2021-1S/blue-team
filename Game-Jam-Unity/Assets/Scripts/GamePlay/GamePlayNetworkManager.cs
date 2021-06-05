@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using GG.Constants;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
@@ -22,6 +23,11 @@ namespace GamePlay
         
         public GameObject[] ObstaclesPrefabs;
 
+        public GameObject[] GroundsPrefabs;
+
+        public List<Ground> Grounds = new List<Ground>();
+
+        public int startAmountGround = 5;
         #region UNITY
 
         public void Awake()
@@ -56,6 +62,36 @@ namespace GamePlay
 
         #region COROUTINES
 
+        GameObject GetRandomObject(GameObject[] objs)
+        {
+            return objs[Random.Range(0, objs.Length)];
+        }
+        private IEnumerator SpawnGrounds()
+        {
+            Vector3 GetPositionToSpawn()
+            {
+                if (Grounds.Count == 0)
+                    return Vector3.left * 15;
+                return Grounds[Grounds.Count - 1].rightLink.position;
+            }
+            for (int i = 0; i < startAmountGround; i++)
+            {
+                GameObject obj = PhotonNetwork.InstantiateRoomObject(GetRandomObject(GroundsPrefabs).name, GetPositionToSpawn(), Quaternion.identity, 0, null);
+                Grounds.Add(obj.GetComponent<Ground>());
+            }
+
+            while (true)
+            {
+                if (Grounds[1].rightLink.position.x < 0)
+                {
+                    Grounds[0].transform.position = GetPositionToSpawn();
+                    Grounds.Add(Grounds[0]);
+                    Grounds.RemoveAt(0);
+                }
+
+                yield return null;
+            }
+        }
         private IEnumerator SpawnObstacles()
         {
             while (true)
@@ -173,6 +209,7 @@ namespace GamePlay
 
                 
                 StartCoroutine(SpawnObstacles());
+                StartCoroutine(SpawnGrounds());
             }
             else
             {
