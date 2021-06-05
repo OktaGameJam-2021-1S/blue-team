@@ -80,7 +80,7 @@ namespace GamePlay
         {
             while (true)
             {
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.1f);
 
                 PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{K.GamePlay.SCORE, Score}});
                 Score++;
@@ -170,13 +170,13 @@ namespace GamePlay
             }
         }
 
-        private IEnumerator EndOfGame(string winner, int score)
+        private IEnumerator EndOfGame(int score)
         {
             float timer = 5.0f;
 
             while (timer > 0.0f)
             {
-                InfoText.text = string.Format("Player {0} won with {1} points.\n\n\nReturning to login screen in {2} seconds.", winner, score, timer.ToString("n2"));
+                InfoText.text = "FIM DE JOGO SCORE: "+ score ;
 
                 yield return new WaitForEndOfFrame();
 
@@ -322,7 +322,9 @@ namespace GamePlay
                     if ((int) lives <= 0)
                     {
                         Debug.Log("FIM DO JOGO");
+                        
                         StopAllCoroutines();
+                        StartCoroutine(EndOfGame(Score));
                     }
                 }
 
