@@ -16,40 +16,41 @@ public class DealDamageWhenInsideCollider : MonoBehaviour
         photonView = GetComponent<PhotonView>();
         damagePerTimeCoroutine = StartCoroutine(DealDamagePerSecond());
     }
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             if (photonView.IsMine)
             {
-                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+                Enemy enemy = other.gameObject.GetComponent<Enemy>();
                 if (enemy != null && !enemiesToTakeDamage.Contains(enemy))
                 {
-                    if(damagePerTimeCoroutine != null)
+                    if (damagePerTimeCoroutine != null)
                     {
                         StopCoroutine(damagePerTimeCoroutine);
                     }
-                    
+
                     enemiesToTakeDamage.Add(enemy);
-                    if(damagePerTimeCoroutine == null)
+                    if (damagePerTimeCoroutine == null)
                     {
                         StartCoroutine(DealDamagePerSecond());
                     }
-                    
+
                 }
 
             }
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             if (photonView.IsMine)
             {
-                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-                if(enemy != null)
+                Enemy enemy = other.gameObject.GetComponent<Enemy>();
+                if (enemy != null)
                 {
                     if (damagePerTimeCoroutine != null)
                     {
@@ -63,7 +64,7 @@ public class DealDamageWhenInsideCollider : MonoBehaviour
                         StartCoroutine(DealDamagePerSecond());
                     }
                 }
-                
+
             }
         }
     }

@@ -546,7 +546,7 @@ MonoBehaviour:
   StartElements: 
   m_eCurrentMagicType: 3
   m_fCastTimeInSeconds: 1
-  m_fflamethrowerTimeInSeconds: 300
+  m_fflamethrowerTimeInSeconds: 2
 --- !u!114 &674484977
 MonoBehaviour:
   m_ObjectHideFlags: 0

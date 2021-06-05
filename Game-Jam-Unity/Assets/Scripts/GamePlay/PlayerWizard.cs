@@ -48,7 +48,7 @@ public class PlayerWizard : MonoBehaviour
 
 
 
-    private void FixedUpdate()
+    private void Update()
     {
 
         if (!photonView.IsMine)
