@@ -62,12 +62,7 @@ public class PlayerWizard : MonoBehaviour
         }
 
         float horizontal = Input.GetAxisRaw("Horizontal");
-        rigidbody.velocity = new Vector3(horizontal, 0, 0) * MovementSpeed * Time.fixedTime;
-
-        if (rigidbody.velocity.magnitude > (MaxSpeed * 1000.0f))
-        {
-            rigidbody.velocity = rigidbody.velocity.normalized * MaxSpeed * 1000.0f;
-        }
+        rigidbody.velocity = new Vector3(horizontal, 0, 0) * MovementSpeed * Time.fixedDeltaTime;
     }
 
     #endregion

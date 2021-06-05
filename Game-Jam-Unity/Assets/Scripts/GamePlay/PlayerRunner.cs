@@ -62,12 +62,9 @@ public class PlayerRunner : MonoBehaviour
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        rigidbody.velocity = new Vector3(horizontal, 0, vertical) * MovementSpeed * Time.fixedTime;
+        rigidbody.velocity = new Vector3(horizontal, 0, vertical) * MovementSpeed * Time.fixedDeltaTime;
 
-        if (rigidbody.velocity.magnitude > (MaxSpeed * 1000.0f))
-        {
-            rigidbody.velocity = rigidbody.velocity.normalized * MaxSpeed * 1000.0f;
-        }
+   
     }
 
     #endregion

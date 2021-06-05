@@ -110,8 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotationSpeed: 90
-  MovementSpeed: 2
-  MaxSpeed: 0.2
+  MovementSpeed: 350
+  MaxSpeed: 0.1
   Destruction: {fileID: 0}
   EngineTrail: {fileID: 0}
   BulletPrefab: {fileID: 0}
@@ -130,7 +130,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
+  m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
 --- !u!54 &674484975
 Rigidbody:
