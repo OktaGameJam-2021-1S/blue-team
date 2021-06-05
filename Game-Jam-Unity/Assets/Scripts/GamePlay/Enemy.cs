@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
+using GG.Constants;
 using Photon.Pun;
 using Photon.Pun.Demo.Asteroids;
 using Photon.Pun.UtilityScripts;
@@ -61,6 +63,29 @@ public class Enemy : MonoBehaviour
             {
                 collision.gameObject.GetComponent<PhotonView>().RPC("LoseLife", RpcTarget.All);
                 
+            }
+        }
+    }
+
+    #endregion
+
+    #region PHOTON
+    [PunRPC]
+    public void LoseLife(int iDamage)
+    {
+        if (photonView.IsMine)
+        {
+            Lives -= iDamage;
+
+            if(Lives <= 0)
+            {
+                object score;
+                if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(K.GamePlay.SCORE, out score))
+                {
+                    int newScore = (int)score +1;
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable { { K.GamePlay.SCORE, newScore } });
+                }
+                transform.position = Vector3.down * 1000;
             }
         }
     }

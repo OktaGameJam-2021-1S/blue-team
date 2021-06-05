@@ -239,7 +239,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3380876357584537725}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -7, z: 8}
+  m_LocalPosition: {x: 0, y: -3, z: 0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2009543613173605551}
@@ -543,7 +543,9 @@ MonoBehaviour:
   MaxSpeed: 0.1
   m_pUIWizardView: {fileID: 4132528014213580451}
   m_gVerticalSpellRoot: {fileID: 3380876357584537725}
-  m_eCurrentMagicType: 1
+  m_eCurrentMagicType: 3
+  m_fCastTimeInSeconds: 1
+  m_fflamethrowerTimeInSeconds: 300
 --- !u!114 &674484977
 MonoBehaviour:
   m_ObjectHideFlags: 0
