@@ -5,7 +5,7 @@ using Photon.Pun.Demo.Asteroids;
 using Photon.Pun.UtilityScripts;
 using UnityEngine;
 
-public class PlayerRunner : MonoBehaviour
+public class PlayerWizard : MonoBehaviour
 {
     public float RotationSpeed = 90.0f;
     public float MovementSpeed = 2.0f;
@@ -48,6 +48,7 @@ public class PlayerRunner : MonoBehaviour
         }
     }
 
+  
     public void FixedUpdate()
     {
         if (!photonView.IsMine)
@@ -61,8 +62,7 @@ public class PlayerRunner : MonoBehaviour
         }
 
         float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        rigidbody.velocity = new Vector3(horizontal, 0, vertical) * MovementSpeed * Time.fixedTime;
+        rigidbody.velocity = new Vector3(horizontal, 0, 0) * MovementSpeed * Time.fixedTime;
 
         if (rigidbody.velocity.magnitude > (MaxSpeed * 1000.0f))
         {
@@ -82,6 +82,5 @@ public class PlayerRunner : MonoBehaviour
     }
 
     #endregion
-    
     
 }
