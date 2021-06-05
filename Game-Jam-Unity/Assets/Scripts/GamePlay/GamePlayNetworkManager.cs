@@ -34,6 +34,8 @@ namespace GamePlay
         public List<Ground> Grounds = new List<Ground>();
 
         public int startAmountGround = 5;
+
+        public int Score;
         #region UNITY
 
         public void Awake()
@@ -56,7 +58,6 @@ namespace GamePlay
             };
             PhotonNetwork.LocalPlayer.SetCustomProperties(props);
             
-            StartCoroutine(SpawnGrounds());
         }
 
         public override void OnDisable()
@@ -75,6 +76,16 @@ namespace GamePlay
             return objs[Random.Range(0, objs.Length)];
         }
 
+        private IEnumerator CountPoints()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(0.1f);
+
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{K.GamePlay.SCORE, Score}});
+                Score++;
+            }
+        }
         private IEnumerator SpawnElements()
         {
             while (true)
@@ -159,13 +170,13 @@ namespace GamePlay
             }
         }
 
-        private IEnumerator EndOfGame(string winner, int score)
+        private IEnumerator EndOfGame(int score)
         {
             float timer = 5.0f;
 
             while (timer > 0.0f)
             {
-                InfoText.text = string.Format("Player {0} won with {1} points.\n\n\nReturning to login screen in {2} seconds.", winner, score, timer.ToString("n2"));
+                InfoText.text = "FIM DE JOGO SCORE: "+ score ;
 
                 yield return new WaitForEndOfFrame();
 
@@ -202,14 +213,18 @@ namespace GamePlay
             CheckEndOfGame();
         }
 
-        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
         {
-            if (changedProps.ContainsKey(K.GamePlay.PLAYER_LIVES))
+            base.OnRoomPropertiesUpdate(propertiesThatChanged);
+            if (propertiesThatChanged.ContainsKey(K.GamePlay.PLAYER_LIVES))
             {
                 CheckEndOfGame();
                 return;
             }
+        }
 
+        public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+        {
             if (!PhotonNetwork.IsMasterClient)
             {
                 return;
@@ -265,6 +280,7 @@ namespace GamePlay
                 
                 StartCoroutine(SpawnObstacles());
                 StartCoroutine(SpawnElements());
+                StartCoroutine(CountPoints());
             }
             else
             {
@@ -298,39 +314,21 @@ namespace GamePlay
         {
             bool allDestroyed = true;
 
-            foreach (Player p in PhotonNetwork.PlayerList)
+            if (PhotonNetwork.IsMasterClient)
             {
                 object lives;
-                if (p.CustomProperties.TryGetValue(K.GamePlay.PLAYER_LIVES, out lives))
+                if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(K.GamePlay.PLAYER_LIVES, out lives))
                 {
-                    if ((int) lives > 0)
+                    if ((int) lives <= 0)
                     {
-                        allDestroyed = false;
-                        break;
-                    }
-                }
-            }
-
-            if (allDestroyed)
-            {
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    StopAllCoroutines();
-                }
-
-                string winner = "";
-                int score = -1;
-
-                foreach (Player p in PhotonNetwork.PlayerList)
-                {
-                    if (p.GetScore() > score)
-                    {
-                        winner = p.NickName;
-                        score = p.GetScore();
+                        Debug.Log("FIM DO JOGO");
+                        
+                        StopAllCoroutines();
+                        StartCoroutine(EndOfGame(Score));
                     }
                 }
 
-                StartCoroutine(EndOfGame(winner, score));
+
             }
         }
 

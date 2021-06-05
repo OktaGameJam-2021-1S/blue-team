@@ -23,24 +23,20 @@ namespace Photon.Pun.Demo.Asteroids
     {
         public GameObject PlayerOverviewEntryPrefab;
 
-        private Dictionary<int, GameObject> playerListEntries;
+        private GameObject entry;
+
+        private int Lives;
+        private int Score;
 
         #region UNITY
 
         public void Awake()
         {
-            playerListEntries = new Dictionary<int, GameObject>();
-
-            foreach (Player p in PhotonNetwork.PlayerList)
-            {
-                GameObject entry = Instantiate(PlayerOverviewEntryPrefab);
-                entry.transform.SetParent(gameObject.transform);
-                entry.transform.localScale = Vector3.one;
-                entry.GetComponent<Text>().color = AsteroidsGame.GetColor(p.GetPlayerNumber());
-                entry.GetComponent<Text>().text = string.Format("{0}\nScore: {1}\nLives: {2}", p.NickName, p.GetScore(), AsteroidsGame.PLAYER_MAX_LIVES);
-
-                playerListEntries.Add(p.ActorNumber, entry);
-            }
+            entry = Instantiate(PlayerOverviewEntryPrefab);
+            entry.transform.SetParent(gameObject.transform);
+            entry.transform.localScale = Vector3.one;
+            Lives = AsteroidsGame.PLAYER_MAX_LIVES;
+            entry.GetComponent<Text>().text = string.Format("Score: {0}\nLives: {1}", 0, Lives);
         }
 
         #endregion
@@ -49,17 +45,27 @@ namespace Photon.Pun.Demo.Asteroids
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            Destroy(playerListEntries[otherPlayer.ActorNumber].gameObject);
-            playerListEntries.Remove(otherPlayer.ActorNumber);
+
         }
 
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
-            GameObject entry;
-            if (playerListEntries.TryGetValue(targetPlayer.ActorNumber, out entry))
+       
+        }
+
+        public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+        {
+            base.OnRoomPropertiesUpdate(propertiesThatChanged);
+            if (propertiesThatChanged.ContainsKey(AsteroidsGame.PLAYER_LIVES))
             {
-                entry.GetComponent<Text>().text = string.Format("{0}\nScore: {1}\nLives: {2}", targetPlayer.NickName, targetPlayer.GetScore(), targetPlayer.CustomProperties[AsteroidsGame.PLAYER_LIVES]);
+                Lives = (int)propertiesThatChanged[AsteroidsGame.PLAYER_LIVES];
             }
+            if (propertiesThatChanged.ContainsKey("PlayerScore"))
+            {
+                Score =(int)propertiesThatChanged["PlayerScore"];
+            }
+
+            entry.GetComponent<Text>().text = string.Format("Score: {0}\nLives: {1}", Score, Lives);
         }
 
         #endregion
