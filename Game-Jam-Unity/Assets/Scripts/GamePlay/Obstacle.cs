@@ -1,13 +1,11 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Pun.Demo.Asteroids;
 using Photon.Pun.UtilityScripts;
 using UnityEngine;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class PlayerRunner : MonoBehaviour
+public class Obstacle : MonoBehaviour
 {
     public float RotationSpeed = 90.0f;
     public float MovementSpeed = 2.0f;
@@ -62,41 +60,22 @@ public class PlayerRunner : MonoBehaviour
             return;
         }
 
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        float diagonalMultiplier = horizontal != 0 && vertical != 0 ? 0.75f: 1f;
-        rigidbody.velocity = new Vector3(horizontal, 0, vertical) * MovementSpeed * Time.fixedDeltaTime * diagonalMultiplier;
+        rigidbody.velocity = Vector3.left * MovementSpeed * Time.fixedDeltaTime ;
 
    
     }
-    [PunRPC]
-    public void LoseLife()
+    public void OnCollisionEnter(Collision collision)
     {
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.angularVelocity = Vector3.zero;
-
-        collider.enabled = false;
-        renderer.enabled = false;
-
-        controllable = false;
-
-        EngineTrail.SetActive(false);
-        Destruction.Play();
-
-        if (photonView.IsMine)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            object lives;
-            if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_LIVES, out lives))
+            if (photonView.IsMine)
             {
-                PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable {{AsteroidsGame.PLAYER_LIVES, ((int) lives <= 1) ? 0 : ((int) lives - 1)}});
-
-                if (((int) lives) > 1)
-                {
-                    StartCoroutine("WaitForRespawn");
-                }
+                collision.gameObject.GetComponent<PhotonView>().RPC("LoseLife", RpcTarget.All);
+                
             }
         }
     }
+
     #endregion
 
     #region COROUTINES
@@ -109,6 +88,5 @@ public class PlayerRunner : MonoBehaviour
     }
 
     #endregion
-    
-    
+
 }
