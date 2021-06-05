@@ -72,42 +72,15 @@ public class PlayerRunner : MonoBehaviour
     [PunRPC]
     public void LoseLife()
     {
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.angularVelocity = Vector3.zero;
-
-        collider.enabled = false;
-        renderer.enabled = false;
-
-        controllable = false;
-
-        EngineTrail.SetActive(false);
-        Destruction.Play();
-
         if (photonView.IsMine)
         {
             object lives;
             if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_LIVES, out lives))
             {
                 PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable {{AsteroidsGame.PLAYER_LIVES, ((int) lives <= 1) ? 0 : ((int) lives - 1)}});
-
-                if (((int) lives) > 1)
-                {
-                    StartCoroutine("WaitForRespawn");
-                }
             }
         }
     }
-    #endregion
-
-    #region COROUTINES
-
-    private IEnumerator WaitForRespawn()
-    {
-        yield return new WaitForSeconds(AsteroidsGame.PLAYER_RESPAWN_TIME);
-
-        photonView.RPC("RespawnSpaceship", RpcTarget.AllViaServer);
-    }
-
     #endregion
     
     
