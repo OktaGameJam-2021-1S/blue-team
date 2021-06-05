@@ -62,7 +62,8 @@ public class PlayerRunner : MonoBehaviour
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        rigidbody.velocity = new Vector3(horizontal, 0, vertical) * MovementSpeed * Time.fixedDeltaTime;
+        float diagonalMultiplier = horizontal != 0 && vertical != 0 ? 0.75f: 1f;
+        rigidbody.velocity = new Vector3(horizontal, 0, vertical) * MovementSpeed * Time.fixedDeltaTime * diagonalMultiplier;
 
    
     }
