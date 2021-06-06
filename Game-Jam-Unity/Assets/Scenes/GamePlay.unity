@@ -210,6 +210,7 @@ MonoBehaviour:
   - {fileID: 7714804385762958802, guid: 2c50c62dec9060a4f84ff0ad117417c1, type: 3}
   - {fileID: 1302227270908850685, guid: 30c95e3f997c1e84ea6a97ef805c2327, type: 3}
   PoolElements: []
+  UsingElements: []
   Grounds: []
   YGround: 1
   YObstacle: 2
@@ -2418,13 +2419,13 @@ MonoBehaviour:
   - element: 2
     Visual: {fileID: 828359390}
     Amount: {fileID: 1436041250}
-  - element: 4
+  - element: 3
     Visual: {fileID: 1655844583}
     Amount: {fileID: 1143429109}
-  - element: 3
+  - element: 1
     Visual: {fileID: 1598701432}
     Amount: {fileID: 502257808}
-  - element: 1
+  - element: 4
     Visual: {fileID: 1403315093}
     Amount: {fileID: 817090992}
 --- !u!1 &1000009482204626
