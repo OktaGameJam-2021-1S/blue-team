@@ -511,6 +511,7 @@ Transform:
   m_Children:
   - {fileID: 2009543613173605551}
   - {fileID: 6957702509478046335}
+  - {fileID: 1357505899836696313}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -544,12 +545,14 @@ MonoBehaviour:
   MaxSpeed: 0.1
   m_pUIWizardView: {fileID: 4132528014213580451}
   m_gVerticalSpellRoot: {fileID: 3380876357584537725}
+  m_gAerialSpellRoot: {fileID: 8522635088405320331}
   WizardCastMagic: {fileID: 2065853193}
   Elements: 02000000040000000800000010000000
   SelectedElements: 
-  m_eCurrentMagicType: 3
+  m_eCurrentMagicType: 2
   m_fCastTimeInSeconds: 1
-  m_fflamethrowerTimeInSeconds: 2
+  m_fFlamethrowerTimeInSeconds: 2
+  m_fFlameTornadoifeSpanTimeInSeconds: 5
 --- !u!114 &674484977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,3 +697,33 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8522635088405320331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1357505899836696313}
+  m_Layer: 0
+  m_Name: AerialSpellRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1357505899836696313
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8522635088405320331}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 10, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7445441748054850396}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
