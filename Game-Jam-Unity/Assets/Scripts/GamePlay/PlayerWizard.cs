@@ -284,8 +284,9 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
 
         obj.GetComponent<TargetFollower>().Target = pParentTransform;
         ShieldScript shield = obj.GetComponent<ShieldScript>();
+        shield.Runner = GetRunner().GetComponent<PlayerRunner>();
 
-        pParentTransform.GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
+        GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
 
          while (!shield.IsDestroyed)
         {

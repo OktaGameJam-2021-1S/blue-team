@@ -637,6 +637,7 @@ MonoBehaviour:
   m_fCastTimeInSeconds: 1
   m_fFlamethrowerTimeInSeconds: 2
   m_fFlameTornadoifeSpanTimeInSeconds: 5
+  m_fShieldTimeInSeconds: 30
 --- !u!114 &674484977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,6 +692,8 @@ MonoBehaviour:
   ValidCasts:
   - ElementsRequired: 0200000004000000
     CastType: 3
+  - ElementsRequired: 0000000003000000
+    CastType: 6
 --- !u!114 &-6694737567451726579
 MonoBehaviour:
   m_ObjectHideFlags: 0

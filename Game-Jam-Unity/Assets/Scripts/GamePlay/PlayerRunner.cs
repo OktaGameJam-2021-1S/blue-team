@@ -67,6 +67,11 @@ public class PlayerRunner : MonoBehaviour
     {
         if (photonView.IsMine)
         {
+            if (hasShield)
+            {
+                hasShield = false;
+                return;
+            }
             object lives;
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_LIVES, out lives))
             {
