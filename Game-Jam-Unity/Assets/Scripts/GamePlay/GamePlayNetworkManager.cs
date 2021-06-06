@@ -149,7 +149,8 @@ namespace GamePlay
             {
                 var position = GetPositionToSpawn();
                 position.y = YGround;
-                GameObject obj = PhotonNetwork.InstantiateRoomObject(GetRandomObject(GroundsPrefabs).name, position,  Quaternion.identity, 0, null);
+                GameObject obj = PhotonNetwork.InstantiateRoomObject(GetRandomObject(GroundsPrefabs).name, Vector3.down * 1000,  Quaternion.identity, 0, null);
+                obj.GetComponent<Rigidbody>().position = position;
                 Grounds.Add(obj.GetComponent<Ground>());
             }
 
