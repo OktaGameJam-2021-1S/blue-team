@@ -10,6 +10,12 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace GamePlay
 {
+    [System.Serializable]
+    public class ObstacleProperty
+    {
+        public int Weight = 1;
+        public GameObject Obstacle;
+    }
     public class GamePlayNetworkManager : MonoBehaviourPunCallbacks
     {
         public static GamePlayNetworkManager Instance = null;
@@ -21,7 +27,8 @@ namespace GamePlay
 
         public Transform[] SpawnPointsObstacle;
         
-        public GameObject[] ObstaclesPrefabs;
+        public ObstacleProperty[] ObstaclesInfo;
+        
 
         public GameObject[] GroundsPrefabs;
 
@@ -43,6 +50,10 @@ namespace GamePlay
 
         public Transform HorizontalSpawnPoint;
         public Transform HorizontalDespawnPoint;
+
+        [Header("Properties")] 
+        public float TimeMinSpawn = 1;
+        public float TimeMaxSpawn = 2;
         #region UNITY
 
         public void Awake()
@@ -181,11 +192,34 @@ namespace GamePlay
         }
         private IEnumerator SpawnObstacles()
         {
+            GameObject[] GetListWeight()
+            {
+               
+                List<GameObject> objs = new List<GameObject>();
+                for (int i = 0; i < ObstaclesInfo.Length; i++)
+                {
+                    for (int j = 0; j < ObstaclesInfo[i].Weight; j++)
+                    {
+                        objs.Add(ObstaclesInfo[i].Obstacle);
+                    }
+                }
+                
+                int n = objs.Count;  
+                while (n > 1) {  
+                    n--;  
+                    int k = Random.Range(0, n + 1);  
+                    GameObject value = objs[k];  
+                    objs[k] = objs[n];  
+                    objs[n] = value;  
+                }  
+
+                return objs.ToArray();
+            }
             while (true)
             {
-                yield return new WaitForSeconds(Random.Range(K.GamePlay.ASTEROIDS_MIN_SPAWN_TIME, K.GamePlay.ASTEROIDS_MAX_SPAWN_TIME));
-
-                GameObject randomObstacle = ObstaclesPrefabs[Random.Range(0, ObstaclesPrefabs.Length)];
+                yield return new WaitForSeconds(Random.Range(TimeMinSpawn, TimeMaxSpawn));
+                
+                GameObject randomObstacle = GetRandomObject(GetListWeight());
                 Vector3 position = SpawnPointsObstacle[Random.Range(0, SpawnPointsObstacle.Length)].position;
                 position.y = YObstacle;
                 Vector3 force = Vector3.zero;

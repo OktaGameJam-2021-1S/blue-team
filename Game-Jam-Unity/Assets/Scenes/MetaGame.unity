@@ -2439,7 +2439,7 @@ GameObject:
   - component: {fileID: 446081592}
   - component: {fileID: 446081593}
   m_Layer: 5
-  m_Name: Login - View @ Show
+  m_Name: Rank - View @ Show
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3523,7 +3523,7 @@ GameObject:
   - component: {fileID: 738143876}
   - component: {fileID: 738143875}
   m_Layer: 5
-  m_Name: Login - View
+  m_Name: Rank - View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7383,7 +7383,7 @@ GameObject:
   - component: {fileID: 1681698019}
   - component: {fileID: 1681698020}
   m_Layer: 5
-  m_Name: Login - View @ Hide
+  m_Name: Rank - View @ Hide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
