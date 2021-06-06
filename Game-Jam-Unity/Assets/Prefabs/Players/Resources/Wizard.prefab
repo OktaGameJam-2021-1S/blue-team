@@ -772,6 +772,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6957702509478046335}
   - component: {fileID: 5984905740013737612}
+  - component: {fileID: 3847785007662958575}
   m_Layer: 10
   m_Name: Mago
   m_TagString: Untagged
@@ -843,6 +844,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &3847785007662958575
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4051306553494548875}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6ec4800198d97f74ab8b717126a5e12d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7266366479229361142
 GameObject:
   m_ObjectHideFlags: 0
