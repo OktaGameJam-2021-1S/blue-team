@@ -81,6 +81,20 @@ public class PlayerRunner : MonoBehaviour
     }
 
     [PunRPC]
+    public void SetShieldAndGainLife(bool value)
+    {
+        if (photonView.IsMine)
+        {
+            hasShield = value;
+            object lives;
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_LIVES, out lives))
+            {
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable {{AsteroidsGame.PLAYER_LIVES, ((int) lives <= 2) ? ((int) lives + 1 ) : ((int) lives + 0)}});
+            }
+        }
+    }
+
+    [PunRPC]
     public void SetShield(bool value)
     {
         if (photonView.IsMine)

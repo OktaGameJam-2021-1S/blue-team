@@ -84,6 +84,7 @@ MonoBehaviour:
   Destruction: {fileID: 0}
   EngineTrail: {fileID: 0}
   BulletPrefab: {fileID: 0}
+  hasShield: 0
 --- !u!114 &1452855306
 MonoBehaviour:
   m_ObjectHideFlags: 0
