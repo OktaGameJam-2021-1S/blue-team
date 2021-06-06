@@ -333,24 +333,22 @@ namespace GamePlay
 
             if (PhotonNetwork.IsMasterClient)
             {
-                Vector3 position = SpawnPointWizard.position;
+                Vector3 position = SpawnPointRunner.position;
                 Quaternion rotation = Quaternion.Euler(0.0f, 0, 0.0f);
-                var wizard = PhotonNetwork.Instantiate("Wizard", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
-                PlayerWizard playerWizard = wizard.GetComponent<PlayerWizard>();
-                playerWizard.m_gHorizontalSpellRoot = HorizontalSpawnPoint;
-                playerWizard.m_gHorizontalDespawnSpellRoot = HorizontalDespawnPoint;
-                playerWizard.m_fGroundHeight = SpawnPointRunner.position.y;
-
-
+                PhotonNetwork.Instantiate("Runner", position, rotation, 0);      // avoid this call on rejoin ( was network instantiated before)
 
                 StartCoroutine(SpawnObstacles());
                 StartCoroutine(SpawnElements());
                 StartCoroutine(CountPoints());
-            }
-            {
-                Vector3 position = SpawnPointRunner.position;
+            }else{
+                Vector3 position = SpawnPointWizard.position;
                 Quaternion rotation = Quaternion.Euler(0.0f, 0, 0.0f);
-                PhotonNetwork.Instantiate("Runner", position, rotation, 0);      // avoid this call on rejoin ( was network instantiated before)
+                var wizard = PhotonNetwork.Instantiate("Wizard", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+                PlayerWizard playerWizard = wizard.GetComponent<PlayerWizard>();
+                         
+                playerWizard.m_gHorizontalSpellRoot = HorizontalSpawnPoint;
+                playerWizard.m_gHorizontalDespawnSpellRoot = HorizontalDespawnPoint;
+                playerWizard.m_fGroundHeight = SpawnPointRunner.position.y;
             }
         }
 

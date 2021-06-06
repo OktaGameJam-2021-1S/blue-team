@@ -27,7 +27,7 @@ public class PlayerRoomUI : MonoBehaviour
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber != ownerId)
         {
-            PlayerReadyButton.gameObject.SetActive(false);
+
         }
         else
         {
@@ -74,6 +74,7 @@ public class PlayerRoomUI : MonoBehaviour
     {
         PlayerReadyButton.GetComponentInChildren<TextMeshProUGUI>().text = playerReady ? "Ready!" : "Ready?";
         PlayerReadyImage.enabled = playerReady;
+        
     }
     
 }
