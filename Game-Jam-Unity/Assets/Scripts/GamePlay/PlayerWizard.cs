@@ -157,7 +157,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
             return;
         }
         m_bIsCasting = true;
-        StartCoroutine(CastMagicCoroutine(m_eCurrentMagicType));
+        StartCoroutine(CastMagicCoroutine(eMagicType));
     }
 
 
