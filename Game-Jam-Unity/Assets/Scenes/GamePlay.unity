@@ -190,17 +190,22 @@ MonoBehaviour:
   - {fileID: 700177056}
   - {fileID: 1409629743}
   - {fileID: 1650194816}
-  ObstaclesPrefabs:
-  - {fileID: 141901767516388621, guid: 67c3149833f61764a8859d5627f5cfdf, type: 3}
-  - {fileID: 6282213167976605844, guid: 1c5bf2db850f8a343885f51f396b4b21, type: 3}
-  - {fileID: 5038948704466294063, guid: e3798cdb0ff19a64caac4a60774f67aa, type: 3}
-  - {fileID: 6422081672087876669, guid: 356576d31d6b89b4bb8ba1383fc58f0a, type: 3}
-  - {fileID: 1270659975907723462, guid: fcfec776de492c546a430dfa22c4b552, type: 3}
-  - {fileID: 3206443749172907701, guid: 9bacca479728c054c98d77fe6421fbca, type: 3}
-  - {fileID: 5046952961538210949, guid: 9dbdcd6324cf9c5469821feba2dd0ac5, type: 3}
-  - {fileID: 6134487316593556311, guid: 40605bf20e3e7a0459d19af3f7e7bc40, type: 3}
-  - {fileID: 9071284396833052349, guid: 4383c51d4dd9b9248bc6effe911a3846, type: 3}
-  - {fileID: 6494651575097535038, guid: f32628099d1dd4c4bae2fa9c5791e884, type: 3}
+  ObstaclesInfo:
+  - Weight: 1
+    Obstacle: {fileID: 5046952961538210949, guid: 9dbdcd6324cf9c5469821feba2dd0ac5,
+      type: 3}
+  - Weight: 5
+    Obstacle: {fileID: 716068070286107549, guid: c2594b2fa01d1494db4e887a2f421ee4,
+      type: 3}
+  - Weight: 2
+    Obstacle: {fileID: 6134487316593556311, guid: 40605bf20e3e7a0459d19af3f7e7bc40,
+      type: 3}
+  - Weight: 4
+    Obstacle: {fileID: 9071284396833052349, guid: 4383c51d4dd9b9248bc6effe911a3846,
+      type: 3}
+  - Weight: 3
+    Obstacle: {fileID: 6494651575097535038, guid: f32628099d1dd4c4bae2fa9c5791e884,
+      type: 3}
   GroundsPrefabs:
   - {fileID: 840549259621160668, guid: e3aaa554803118740ac747359b461a28, type: 3}
   ElementsToSpawn: 
@@ -217,6 +222,8 @@ MonoBehaviour:
   startAmountGround: 5
   Score: 0
   HorizontalSpawnPoint: {fileID: 91236002}
+  TimeMinSpawn: 1
+  TimeMaxSpawn: 2
 --- !u!4 &45736085
 Transform:
   m_ObjectHideFlags: 0
