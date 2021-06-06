@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 public enum TransitionType
@@ -33,7 +35,8 @@ public class GameSessionManager : MonoBehaviour
     public BackendController BackendController;
 
     public ServerState ServerState;
-    
+
+
     public void Initialize()
     {
         UIViewManager.RegisterAllViews();
@@ -41,4 +44,8 @@ public class GameSessionManager : MonoBehaviour
         UIViewManager.ViewData = new ViewData();
         UIViewManager.PopUpViewData = new ViewData();
     }
+    
+
+
+    
 }

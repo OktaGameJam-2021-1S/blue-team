@@ -1,19 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Pun.Demo.Asteroids;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
-public class SelectionView : MonoBehaviourPunCallbacks, IView
+public class ListRoomView : MonoBehaviourPunCallbacks, IView
 {
     #region Attributes
 
-    [SerializeField] private Button _createRoom;
-    [SerializeField] private Button _roomList;
-
+    public Button _back;
+    public Transform Root;
+    public GameObject RoomEntryUIPrefab;
     #endregion
     #region View Data
     
@@ -35,41 +38,31 @@ public class SelectionView : MonoBehaviourPunCallbacks, IView
     private GameSessionManager _session;
     private UIViewController _viewController;
     private UIViewManager _viewManager;
+    
+    public Dictionary<string, RoomInfo> cachedRoomList = new Dictionary<string, RoomInfo>();
     public void SetupDependency(GameSessionManager session, UIViewController uiViewController, UIViewManager uiViewManager)
     {
         this._session = session;
         this._viewController = uiViewController;
-        this._viewManager = uiViewManager;
-
+   
+        
         EnableInteraction();
         
-        _createRoom.onClick.RemoveAllListeners();
-        _createRoom.onClick.AddListener(CreateRoom);
+        _back.onClick.RemoveAllListeners();
+        _back.onClick.AddListener(delegate
+        {
+            if (PhotonNetwork.InLobby)
+            {
+                PhotonNetwork.LeaveRoom();
+            }
+            
+            var selectionView = _viewManager.GetScreen<SelectionView>();
+            selectionView.SetupDependency(_session, _viewController, _viewManager);
+            _viewController.OpenSingleView(selectionView, _viewManager.ViewData);
+        });
         
-        
-        _roomList.onClick.RemoveAllListeners();
-        _roomList.onClick.AddListener(ListRoom);
-        
-
     }
 
-    private void CreateRoom()
-    {
-        var selectionView = _viewManager.GetScreen<CreateRoomView>();
-        selectionView.SetupDependency(_session, _viewController, _viewManager);
-        _viewController.OpenSingleView(selectionView, _viewManager.ViewData);
-    }
-    private void ListRoom()
-    {
-        var selectionView = _viewManager.GetScreen<ListRoomView>();
-        selectionView.SetupDependency(_session, _viewController, _viewManager);
-        _viewController.OpenSingleView(selectionView, _viewManager.ViewData);
-    }
-    
-    #region PUN CALLBACKS
-
-
-    #endregion
 
     private void DisableInteraction()
     {
