@@ -545,11 +545,12 @@ MonoBehaviour:
   m_pUIWizardView: {fileID: 4132528014213580451}
   m_gVerticalSpellRoot: {fileID: 3380876357584537725}
   WizardCastMagic: {fileID: 2065853193}
-  Elements: 02000000040000000800000010000000
+  Elements: 020000000200000002000000040000000400000004000000010000000100000001000000030000000300000003000000
   SelectedElements: 
   m_eCurrentMagicType: 3
   m_fCastTimeInSeconds: 1
-  m_fflamethrowerTimeInSeconds: 2
+  m_fFlamethrowerTimeInSeconds: 2
+  m_fFlameTornadoifeSpanTimeInSeconds: 5
 --- !u!114 &674484977
 MonoBehaviour:
   m_ObjectHideFlags: 0

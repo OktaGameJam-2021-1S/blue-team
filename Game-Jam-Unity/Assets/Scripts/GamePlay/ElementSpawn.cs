@@ -8,15 +8,15 @@ using Photon.Pun.Demo.Asteroids;
 using Photon.Pun.UtilityScripts;
 using UnityEngine;
 
-[Flags]
 public enum ElementType
 {
     None = 0,
-    Air = 1 << 1,
-    Fire = 1 << 2,
-    Water = 1 << 3,
-    Earth = 1 << 4,
+    Air = 1 ,
+    Fire = 2,
+    Water = 3,
+    Earth = 4,
 }
+
 public class ElementSpawn : MonoBehaviour
 {
     public ElementType ElementType;

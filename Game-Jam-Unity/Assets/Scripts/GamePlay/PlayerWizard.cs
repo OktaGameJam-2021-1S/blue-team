@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using GamePlay;
@@ -52,7 +53,13 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         m_gRunner = GameObject.FindGameObjectWithTag("Player");
     }
 
-
+    private void Start()
+    {
+        if (photonView.IsMine)
+        {
+            SyncElement();
+        }
+    }
 
 
     private void Update()
@@ -105,7 +112,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         ElementType element = GetElementType();
         if (element != ElementType.None)
         {
-            if (Elements.Contains(element) && SelectedElements.Count <= 2)
+            if (Elements.Contains(element) && SelectedElements.Count < 2)
             {
                 SelectedElements.Add(element);
                 Elements.Remove(element);
@@ -116,12 +123,11 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
 
     private void SyncElement()
     {
-        ElementType elementType = ElementType.None;
-        for (int i = 0; i < Elements.Count; i++)
-        {
-            elementType |= Elements[i];
-        }
-        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{AsteroidsGame.PLAYER_ELEMENTS, elementType}});
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{AsteroidsGame.PLAYER_ELEMENTINFO, ElementType.Fire}, {AsteroidsGame.PLAYER_ELEMENTAMOUNT, Elements.FindAll((element) => element == ElementType.Fire).Count}});
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{AsteroidsGame.PLAYER_ELEMENTINFO, ElementType.Air}, {AsteroidsGame.PLAYER_ELEMENTAMOUNT, Elements.FindAll((element) => element == ElementType.Air).Count}});
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{AsteroidsGame.PLAYER_ELEMENTINFO, ElementType.Earth}, {AsteroidsGame.PLAYER_ELEMENTAMOUNT, Elements.FindAll((element) => element == ElementType.Earth).Count}});
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{AsteroidsGame.PLAYER_ELEMENTINFO, ElementType.Water}, {AsteroidsGame.PLAYER_ELEMENTAMOUNT, Elements.FindAll((element) => element == ElementType.Water).Count}});
+   
     }
     private ElementType GetElementType()
     {
