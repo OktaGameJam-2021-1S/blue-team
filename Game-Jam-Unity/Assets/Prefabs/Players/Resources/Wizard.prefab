@@ -560,7 +560,7 @@ MonoBehaviour:
   m_fSuperSpeedBuff: 1.6
   m_fFloatTimeInSeconds: 1
   m_fFlameTornadoifeSpanTimeInSeconds: 5
-  m_fShieldTimeInSeconds: 30
+  m_fShieldTimeInSeconds: 10
 --- !u!114 &674484977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -624,7 +624,7 @@ MonoBehaviour:
   - ElementsRequired: 0300000000000000
     CastType: 6
   - ElementsRequired: 0300000003000000
-    CastType: 7
+    CastType: 10
 --- !u!114 &-6694737567451726579
 MonoBehaviour:
   m_ObjectHideFlags: 0
