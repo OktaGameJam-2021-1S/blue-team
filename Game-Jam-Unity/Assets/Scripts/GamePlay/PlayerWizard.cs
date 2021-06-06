@@ -12,8 +12,9 @@ public class PlayerWizard : MonoBehaviour
     public float MovementSpeed = 2.0f;
     public float MaxSpeed = 0.2f;
     public UIWizardView m_pUIWizardView;
-    public GameObject m_gVerticalSpellRoot;
-    public GameObject m_gAerialSpellRoot; // used to cast meteor from sky
+    public Transform m_gVerticalSpellRoot;
+    public Transform m_gAerialSpellRoot; // used to cast meteor from sky
+    public Transform m_gHorizontalSpellRoot; // used to cast meteor from sky
 
     public WizardCastMagic WizardCastMagic;
 
@@ -178,6 +179,19 @@ public class PlayerWizard : MonoBehaviour
                     break;
                 }
 
+            case SpellType.Tsunami:
+                {
+                    coroutineView = m_pUIWizardView.ShowAreaOfEffect(m_gVerticalSpellRoot.transform.position, 3, true);
+                    yield return StartCoroutine(coroutineView);
+                    Vector3? targetPosition = (Vector3)coroutineView.Current;
+                    if (targetPosition.HasValue)
+                    {
+                        yield return StartCoroutine(CastTsunami(targetPosition.Value));
+                    }
+                    m_bIsCasting = false;
+                    break;
+                }
+
 
 
             default:
@@ -240,6 +254,14 @@ public class PlayerWizard : MonoBehaviour
         Destroy(obj);
         yield break;
     }
+
+    public IEnumerator CastTsunami(Vector3 pPosition)
+    {
+        Vector3 horizontalPosition = new Vector3(m_gHorizontalSpellRoot.position.x, m_gHorizontalSpellRoot.position.y, pPosition.z);
+        GameObject obj = PhotonNetwork.InstantiateRoomObject("Tsunami", horizontalPosition, Quaternion.identity, 0, null);
+        obj.transform.LookAt(pPosition);
+        yield break;
+    }
     #endregion
     private GameObject GetRunner()
     {
@@ -258,5 +280,6 @@ public enum SpellType
     Meteor,
     Flamethrower,
     FireTornado,
+    Tsunami,
 
 }

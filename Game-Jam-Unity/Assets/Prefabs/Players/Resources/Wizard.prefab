@@ -593,6 +593,7 @@ Transform:
   - {fileID: 2009543613173605551}
   - {fileID: 6957702509478046335}
   - {fileID: 147618217063279120}
+  - {fileID: 1357505899836696313}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -625,12 +626,13 @@ MonoBehaviour:
   MovementSpeed: 350
   MaxSpeed: 0.1
   m_pUIWizardView: {fileID: 4132528014213580451}
-  m_gVerticalSpellRoot: {fileID: 3380876357584537725}
-  m_gAerialSpellRoot: {fileID: 8522635088405320331}
+  m_gVerticalSpellRoot: {fileID: 437809576518871736}
+  m_gAerialSpellRoot: {fileID: 1357505899836696313}
+  m_gHorizontalSpellRoot: {fileID: 0}
   WizardCastMagic: {fileID: 2065853193}
   Elements: 02000000040000000800000010000000
   SelectedElements: 
-  m_eCurrentMagicType: 2
+  m_eCurrentMagicType: 5
   m_fCastTimeInSeconds: 1
   m_fFlamethrowerTimeInSeconds: 2
   m_fFlameTornadoifeSpanTimeInSeconds: 5
@@ -806,5 +808,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7445441748054850396}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

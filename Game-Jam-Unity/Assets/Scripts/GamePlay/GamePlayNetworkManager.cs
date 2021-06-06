@@ -39,6 +39,8 @@ namespace GamePlay
         public int startAmountGround = 5;
 
         public int Score;
+
+        public Transform HorizontalSpawnPoint;
         #region UNITY
 
         public void Awake()
@@ -295,7 +297,9 @@ namespace GamePlay
             {
                 Vector3 position = SpawnPointWizard.position;
                 Quaternion rotation = Quaternion.Euler(0.0f, 0, 0.0f);
-                PhotonNetwork.Instantiate("Wizard", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+                var wizard = PhotonNetwork.Instantiate("Wizard", position, rotation, 0);      // avoid this call on rejoin (ship was network instantiated before)
+
+                wizard.GetComponent<PlayerWizard>().m_gHorizontalSpellRoot = HorizontalSpawnPoint;
 
                 
                 StartCoroutine(SpawnObstacles());

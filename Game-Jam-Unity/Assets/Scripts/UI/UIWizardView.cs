@@ -29,9 +29,10 @@ public class UIWizardView : MonoBehaviour
         yield break;
     }
 
-    public IEnumerator ShowAreaOfEffect(Vector3 targetPosition, float fArea)
+    public IEnumerator ShowAreaOfEffect(Vector3 targetPosition, float fArea, bool bOnlyVertical = false)
     {
         m_gTarget.gameObject.SetActive(true);
+        m_gTarget.OnlyVertical = bOnlyVertical;
         m_gTarget.transform.localScale = new Vector3(fArea, 0, fArea);
         m_gTarget.transform.position = targetPosition;
         m_gTarget.CanMove = true;
