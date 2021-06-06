@@ -13,6 +13,7 @@ namespace Photon.Pun.Demo.Asteroids
 
         public const string PLAYER_ELEMENTS = "PlayerElements";
         public const string PLAYER_ELEMENTINFO = "PlayerElementsInfo";
+        public const string PLAYER_SELECTELEMENT = "PlayerSelectedElements";
         public const string PLAYER_ELEMENTAMOUNT = "PlayerElementsInfoAmount";
         
         public const string PLAYER_LIVES = "PlayerLives";

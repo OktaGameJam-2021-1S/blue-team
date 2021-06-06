@@ -94,6 +94,8 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
             
             GamePlayNetworkManager.Instance.ElementsToSpawn.AddRange(respawn);
             SelectedElements.Clear();
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable
+                {{AsteroidsGame.PLAYER_SELECTELEMENT, ElementType.None}});
             rigidbody.velocity = Vector3.zero;
         }
         
@@ -128,6 +130,9 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
             {
                 SelectedElements.Add(element);
                 Elements.Remove(element);
+
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable
+                    {{AsteroidsGame.PLAYER_SELECTELEMENT, element}});
                 
                 SyncElement();
             }
