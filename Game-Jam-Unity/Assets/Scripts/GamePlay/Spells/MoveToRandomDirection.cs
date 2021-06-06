@@ -18,6 +18,10 @@ public class MoveToRandomDirection : MonoBehaviour
 
     private void Update()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         transform.Translate(transform.forward * Time.deltaTime * velocity);
     }
 
