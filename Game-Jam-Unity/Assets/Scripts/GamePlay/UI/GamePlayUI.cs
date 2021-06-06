@@ -40,8 +40,11 @@ public class GamePlayUI :  MonoBehaviourPunCallbacks
             var Amount = (int)propertiesThatChanged[AsteroidsGame.PLAYER_ELEMENTAMOUNT];
             
             var ElementVisual = VisualElements.Find((element)=> element.element == Element);
-            ElementVisual.Amount.text = Amount.ToString();
-            ElementVisual.Visual.gameObject.SetActive(Amount > 0);
+            if (ElementVisual != null)
+            {
+                ElementVisual.Amount.text = Amount.ToString();
+                ElementVisual.Visual.gameObject.SetActive(Amount > 0);
+            }
         }
     }
 

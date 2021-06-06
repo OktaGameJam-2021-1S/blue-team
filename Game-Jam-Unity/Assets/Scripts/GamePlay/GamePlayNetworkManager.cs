@@ -232,18 +232,10 @@ namespace GamePlay
 
         private IEnumerator EndOfGame(int score)
         {
-            float timer = 5.0f;
 
-            while (timer > 0.0f)
-            {
-                InfoText.text = "FIM DE JOGO SCORE: "+ score ;
-
-                yield return new WaitForEndOfFrame();
-
-                timer -= Time.deltaTime;
-            }
-        
+            yield return null;
             PhotonNetwork.LeaveRoom();
+
         }
 
         #endregion
@@ -252,7 +244,7 @@ namespace GamePlay
 
         public override void OnDisconnected(DisconnectCause cause)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("DemoAsteroids-LobbyScene");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MetaGame");
         }
 
         public override void OnLeftRoom()
