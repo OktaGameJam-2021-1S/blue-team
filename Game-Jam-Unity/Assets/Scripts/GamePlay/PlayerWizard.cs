@@ -78,8 +78,13 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
             // CastMagic(m_eCurrentMagicType);
             if(SelectedElements.Count == 0)
                 return;
+            List<ElementType> respawn = new List<ElementType>(SelectedElements);
+            if(SelectedElements.Count == 1)
+                SelectedElements.Add(ElementType.None);
+            
             CastMagic(WizardCastMagic.CastSpell(SelectedElements.ToArray()));
-            GamePlayNetworkManager.Instance.ElementsToSpawn.AddRange(new List<ElementType>(SelectedElements));
+            
+            GamePlayNetworkManager.Instance.ElementsToSpawn.AddRange(respawn);
             SelectedElements.Clear();
             rigidbody.velocity = Vector3.zero;
         }
