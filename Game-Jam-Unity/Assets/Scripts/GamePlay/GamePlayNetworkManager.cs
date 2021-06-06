@@ -34,6 +34,7 @@ namespace GamePlay
         public List<Ground> Grounds = new List<Ground>();
 
         public float YGround = 1f;
+        public float YObstacle = 2f;
         
         public int startAmountGround = 5;
 
@@ -103,7 +104,7 @@ namespace GamePlay
                     var type = ElementsToSpawn[0];
                     bool spawnedFromPool = false;
                     Vector3 position = GetRandomObject(SpawnPointsObstacle).transform.position;
-                    position.y = 1;
+                    position.y = YObstacle;
                     for (int i = 0; i < PoolElements.Count; i++)
                     {
                         if (PoolElements[i].ElementType == type)
@@ -173,7 +174,7 @@ namespace GamePlay
 
                 GameObject randomObstacle = ObstaclesPrefabs[Random.Range(0, ObstaclesPrefabs.Length)];
                 Vector3 position = SpawnPointsObstacle[Random.Range(0, SpawnPointsObstacle.Length)].position;
-                position.y = 1;
+                position.y = YObstacle;
                 Vector3 force = Vector3.zero;
                 Vector3 torque = Vector3.zero;
                 object[] instantiationData = {force, torque, true};
