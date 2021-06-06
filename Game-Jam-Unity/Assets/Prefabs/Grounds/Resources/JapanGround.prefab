@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4762181907093245240}
   - component: {fileID: 5897801646518651369}
   - component: {fileID: 5703005374025537484}
-  - component: {fileID: 6799336279163335239}
+  - component: {fileID: 7867119721060587135}
   m_Layer: 0
   m_Name: JapanGround
   m_TagString: Untagged
@@ -105,7 +105,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6799336279163335239}
+  - {fileID: 7867119721060587135}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -125,7 +125,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 124
   m_CollisionDetection: 0
---- !u!114 &6799336279163335239
+--- !u!114 &7867119721060587135
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
+  m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
 --- !u!1001 &2258581464608895625
 PrefabInstance:

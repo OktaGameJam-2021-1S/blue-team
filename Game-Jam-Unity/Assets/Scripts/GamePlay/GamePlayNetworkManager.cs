@@ -157,9 +157,13 @@ namespace GamePlay
             {
                 if (Grounds[1].rightLink.position.x < 0)
                 {
-                    Grounds[0].transform.position = Vector3.down * 1000;
-                    yield return null;
                     var position = GetPositionToSpawn();
+                    
+                    position.y = -1000;
+                    
+                    Grounds[0].transform.position = position;
+                    yield return null;
+             
                     position.y = YGround;
                     Grounds[0].transform.position = position;
                     Grounds.Add(Grounds[0]);
