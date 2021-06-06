@@ -74,6 +74,7 @@ namespace GamePlay
 
         #region COROUTINES
 
+     
         T GetRandomObject<T>(T[] objs)
         {
             return objs[Random.Range(0, objs.Length)];
@@ -156,6 +157,8 @@ namespace GamePlay
             {
                 if (Grounds[1].rightLink.position.x < 0)
                 {
+                    Grounds[0].transform.position = Vector3.down * 1000;
+                    yield return null;
                     var position = GetPositionToSpawn();
                     position.y = YGround;
                     Grounds[0].transform.position = position;
@@ -295,7 +298,7 @@ namespace GamePlay
                 StartCoroutine(SpawnElements());
                 StartCoroutine(CountPoints());
             }
-            {
+            else{
                 Vector3 position = SpawnPointRunner.position;
                 Quaternion rotation = Quaternion.Euler(0.0f, 0, 0.0f);
                 PhotonNetwork.Instantiate("Runner", position, rotation, 0);      // avoid this call on rejoin ( was network instantiated before)

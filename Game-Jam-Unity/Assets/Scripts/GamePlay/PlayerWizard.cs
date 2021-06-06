@@ -1,12 +1,15 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using GamePlay;
 using Photon.Pun;
 using Photon.Pun.Demo.Asteroids;
 using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class PlayerWizard : MonoBehaviour
+public class PlayerWizard : MonoBehaviourPunCallbacks
 {
     public float RotationSpeed = 90.0f;
     public float MovementSpeed = 2.0f;
@@ -15,7 +18,7 @@ public class PlayerWizard : MonoBehaviour
     public GameObject m_gVerticalSpellRoot;
 
     public WizardCastMagic WizardCastMagic;
-
+   
     public List<ElementType> Elements;
     public List<ElementType> SelectedElements;
     private PhotonView photonView;
@@ -81,6 +84,21 @@ public class PlayerWizard : MonoBehaviour
         rigidbody.velocity = new Vector3(horizontal, 0, 0) * MovementSpeed * Time.fixedDeltaTime;
     }
 
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
+
+        if (photonView.IsMine)
+        {
+            if (changedProps.ContainsKey(AsteroidsGame.PLAYER_ELEMENTS))
+            {
+                var elementType = (ElementType) changedProps[AsteroidsGame.PLAYER_ELEMENTS];
+                Elements.Add(elementType);
+                SyncElement();
+            }
+        }
+    }
+
     private void SelectElement()
     {
         ElementType element = GetElementType();
@@ -90,8 +108,19 @@ public class PlayerWizard : MonoBehaviour
             {
                 SelectedElements.Add(element);
                 Elements.Remove(element);
+                SyncElement();
             }
         }
+    }
+
+    private void SyncElement()
+    {
+        ElementType elementType = ElementType.None;
+        for (int i = 0; i < Elements.Count; i++)
+        {
+            elementType |= Elements[i];
+        }
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{AsteroidsGame.PLAYER_ELEMENTS, elementType}});
     }
     private ElementType GetElementType()
     {

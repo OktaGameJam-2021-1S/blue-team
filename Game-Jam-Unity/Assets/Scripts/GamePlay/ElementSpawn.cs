@@ -1,19 +1,21 @@
 ﻿
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using GamePlay;
 using Photon.Pun;
 using Photon.Pun.Demo.Asteroids;
 using Photon.Pun.UtilityScripts;
 using UnityEngine;
 
+[Flags]
 public enum ElementType
 {
-    Air,
-    Fire,
-    Water,
-    Earth,
-    None
+    None = 0,
+    Air = 1 << 1,
+    Fire = 1 << 2,
+    Water = 1 << 3,
+    Earth = 1 << 4,
 }
 public class ElementSpawn : MonoBehaviour
 {
@@ -67,7 +69,7 @@ public class ElementSpawn : MonoBehaviour
         {
             if (photonView.IsMine)
             {
-                GamePlayNetworkManager.Instance.ElementsToSpawn.Remove(ElementType);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable {{AsteroidsGame.PLAYER_ELEMENTS, ElementType}});
                 photonView.RPC("DisableElement", RpcTarget.All);
             }
         }
@@ -77,6 +79,8 @@ public class ElementSpawn : MonoBehaviour
             if (photonView.IsMine)
             {
                 GamePlayNetworkManager.Instance.ElementsToSpawn.Add(ElementType);
+                photonView.RPC("DisableElement", RpcTarget.All);
+          
             }
         }
     }

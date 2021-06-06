@@ -545,7 +545,7 @@ MonoBehaviour:
   m_pUIWizardView: {fileID: 4132528014213580451}
   m_gVerticalSpellRoot: {fileID: 3380876357584537725}
   WizardCastMagic: {fileID: 2065853193}
-  Elements: 00000000010000000200000003000000
+  Elements: 02000000040000000800000010000000
   SelectedElements: 
   m_eCurrentMagicType: 3
   m_fCastTimeInSeconds: 1
@@ -603,7 +603,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &2065853193
 MonoBehaviour:
@@ -618,7 +618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ValidCasts:
-  - ElementsRequired: 0100000000000000
+  - ElementsRequired: 0200000004000000
     CastType: 3
 --- !u!1 &8415927555579472842
 GameObject:
