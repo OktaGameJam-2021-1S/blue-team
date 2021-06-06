@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class ShieldScript: MonoBehaviour
@@ -9,11 +11,22 @@ public class ShieldScript: MonoBehaviour
     
     public bool timeEnd {get; set; }
 
+    private PhotonView _photonView;
+
+    private void Start()
+    {
+        _photonView = GetComponent<PhotonView>();
+        Runner = FindObjectOfType<PlayerRunner>();
+    }
+
     private void Update()
     {
-        if(!Runner.hasShield)
+        if (_photonView.IsMine)
         {
-            IsDestroyed = true;
+            if (!Runner.hasShield)
+            {
+                IsDestroyed = true;
+            }
         }
     }
 
