@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 902263559102750576}
   - component: {fileID: 2849254576032084060}
   - component: {fileID: 2814505257592322885}
+  - component: {fileID: 823195113662931922}
   m_Layer: 0
   m_Name: FlameTornado
   m_TagString: Untagged
@@ -182,7 +183,7 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 1.25
-  m_Height: 9.74
+  m_Height: 13.57
   m_Direction: 1
   m_Center: {x: 0, y: 4.79, z: 0}
 --- !u!114 &2814505257592322885
@@ -201,6 +202,21 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 0
+--- !u!114 &823195113662931922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2744759049387251133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a6cc1e2db911f94081eec333babcb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_iDamage: 1
+  m_fDamageCooldown: 1
+  CanDamagePlayer: 1
 --- !u!1 &3018702311842710982
 GameObject:
   m_ObjectHideFlags: 0
