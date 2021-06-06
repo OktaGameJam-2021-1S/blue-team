@@ -21,7 +21,7 @@ public class EnemyArcher : Enemy
 
     public float startTimeBtwShots;
 
-    public GameObject project;
+    public GameObject projectile;
     void Start()
     {
         ground = GameObject.FindWithTag("Ground").transform;
@@ -34,7 +34,7 @@ public class EnemyArcher : Enemy
     {
         if(timeBtwShots <= 0)
         {
-            PhotonNetwork.Instantiate(project.name, transform.position, Quaternion.identity);
+            PhotonNetwork.Instantiate(projectile.name, transform.position, Quaternion.identity);
             timeBtwShots = startTimeBtwShots;
 
         } else
