@@ -70,7 +70,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
             if(SelectedElements.Count == 0)
                 return;
             CastMagic(WizardCastMagic.CastSpell(SelectedElements.ToArray()));
-            GamePlayNetworkManager.Instance.ElementsToSpawn.AddRange(SelectedElements);
+            GamePlayNetworkManager.Instance.ElementsToSpawn.AddRange(new List<ElementType>(SelectedElements));
             SelectedElements.Clear();
             rigidbody.velocity = Vector3.zero;
         }
