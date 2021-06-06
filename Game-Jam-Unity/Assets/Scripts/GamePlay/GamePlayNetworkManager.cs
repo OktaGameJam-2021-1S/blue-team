@@ -339,6 +339,7 @@ namespace GamePlay
                 PlayerWizard playerWizard = wizard.GetComponent<PlayerWizard>();
                 playerWizard.m_gHorizontalSpellRoot = HorizontalSpawnPoint;
                 playerWizard.m_gHorizontalDespawnSpellRoot = HorizontalDespawnPoint;
+                playerWizard.m_fGroundHeight = SpawnPointRunner.position.y;
 
 
 

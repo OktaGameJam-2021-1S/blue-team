@@ -19,6 +19,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
     public Transform m_gAerialSpellRoot; // used to cast meteor from sky
     public Transform m_gHorizontalSpellRoot; // used to cast tsunami from left
     public Transform m_gHorizontalDespawnSpellRoot; //used to destroy tsunami
+    public float m_fGroundHeight;
 
     public WizardCastMagic WizardCastMagic;
 
@@ -40,6 +41,10 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
     [Header("Spell Related")]
     public float m_fCastTimeInSeconds = 1f;
     public float m_fFlamethrowerTimeInSeconds = 2f;
+    public float m_fSpeedBuffTimeInSeconds = 5f;
+    public float m_fSpeedBuffSpeed = 1.3f;
+    public float m_fSuperSpeedBuff = 1.6f;
+    public float m_fFloatTimeInSeconds = 1f;
     public float m_fFlameTornadoifeSpanTimeInSeconds = 5f;
 
     public float m_fShieldTimeInSeconds = 10f;
@@ -240,7 +245,21 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
                     break;
                 }
 
-            case SpellType.Heal:
+            case SpellType.Speed:
+                {
+                    yield return StartCoroutine(CastSpeedBuff(m_fSpeedBuffSpeed, GetRunner().transform, "SpeedBuff"));
+                    m_bIsCasting = false;
+                    break;
+                }
+
+            case SpellType.SuperSpeed:
+                {
+                    yield return StartCoroutine(CastSpeedBuff(m_fSuperSpeedBuff, GetRunner().transform, "SuperSpeedBuff"));
+                    m_bIsCasting = false;
+                    break;
+                }
+
+			case SpellType.Heal:
                 {
                     yield return StartCoroutine(CastShieldAndHeal(GetRunner().transform));
                     m_bIsCasting = false;
@@ -311,8 +330,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
     {
         //CASTING
         yield return new WaitForSeconds(m_fCastTimeInSeconds);
-
-        GameObject obj = PhotonNetwork.InstantiateRoomObject("Heal", pParentTransform.position, Quaternion.identity, 0, null);
+		GameObject obj = PhotonNetwork.InstantiateRoomObject("Heal", pParentTransform.position, Quaternion.identity, 0, null);
 
         obj.GetComponent<TargetFollower>().Target = pParentTransform;
         ShieldScript shield = obj.GetComponent<ShieldScript>();
@@ -334,6 +352,19 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
 
         pParentTransform.GetComponent<PhotonView>().RPC("SetShieldAndGainLife", RpcTarget.All, false);
 
+        Destroy(obj);
+        yield break;
+    }
+    public IEnumerator CastSpeedBuff(float multiplier, Transform pTransform, string pPrefabName)
+    {
+        //CASTING
+        yield return new WaitForSeconds(m_fCastTimeInSeconds);
+        GameObject obj = PhotonNetwork.InstantiateRoomObject(pPrefabName, pTransform.position, Quaternion.identity, 0, null);
+
+        obj.GetComponent<TargetFollower>().Target = pTransform;
+        GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, multiplier);
+        yield return new WaitForSeconds(m_fSpeedBuffTimeInSeconds);
+        GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, 1f);
         Destroy(obj);
         yield break;
     }
@@ -382,6 +413,23 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         Destroy(obj);
         yield break;
     }
+
+    public IEnumerator CastFloat(Vector3 pPosition, float pArea)
+    {
+        yield return new WaitForSeconds(m_fCastTimeInSeconds);
+
+        GameObject obj = PhotonNetwork.InstantiateRoomObject("FloatBubble", pPosition, Quaternion.identity, 0, null);
+        obj.transform.localScale = new Vector3(pArea, obj.transform.localScale.y, pArea);
+        FloatObjectsInArea floatBubble = obj.GetComponent<FloatObjectsInArea>();
+        floatBubble.GroundHeight = m_fGroundHeight;
+        floatBubble.TimeToGetInTheAir = m_fFloatTimeInSeconds;
+        floatBubble.FloatObjects(pPosition, pArea);
+        yield return new WaitForSeconds(m_fFloatTimeInSeconds+0.5f);
+        floatBubble.DefloatObjects();
+        yield return new WaitForSeconds(m_fFloatTimeInSeconds + 0.5f);
+        Destroy(obj);
+        yield break;
+    }
     #endregion
     private GameObject GetRunner()
     {
@@ -402,6 +450,9 @@ public enum SpellType
     FireTornado,
     Tsunami,
     Shield,
-    Heal,
+    Float,
+    Speed,
+    SuperSpeed,
+	Heal,
 
 }
