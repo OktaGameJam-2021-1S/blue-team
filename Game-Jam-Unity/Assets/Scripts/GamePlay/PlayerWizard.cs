@@ -36,7 +36,8 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
 
     [Header("Spell Related")]
     public float m_fCastTimeInSeconds = 1f;
-    public float m_fflamethrowerTimeInSeconds = 2f;
+    public float m_fFlamethrowerTimeInSeconds = 2f;
+    public float m_fFlameTornadoifeSpanTimeInSeconds = 5f;
 
 
     #region UNITY
@@ -70,7 +71,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
             if(SelectedElements.Count == 0)
                 return;
             CastMagic(WizardCastMagic.CastSpell(SelectedElements.ToArray()));
-            GamePlayNetworkManager.Instance.ElementsToSpawn.AddRange(SelectedElements);
+            GamePlayNetworkManager.Instance.ElementsToSpawn.AddRange(new List<ElementType>(SelectedElements));
             SelectedElements.Clear();
             rigidbody.velocity = Vector3.zero;
         }
@@ -150,7 +151,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
             return;
         }
         m_bIsCasting = true;
-        StartCoroutine(CastMagicCoroutine(eMagicType));
+        StartCoroutine(CastMagicCoroutine(m_eCurrentMagicType));
     }
 
 
@@ -192,6 +193,21 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
                     break;
                 }
 
+            case SpellType.FireTornado:
+                {
+                    coroutineView = m_pUIWizardView.ShowAreaOfEffect(m_gVerticalSpellRoot.transform.position, 2);
+                    yield return StartCoroutine(coroutineView);
+                    Vector3? targetPosition = (Vector3)coroutineView.Current;
+                    if (targetPosition.HasValue)
+                    {
+                        yield return StartCoroutine(CastFlameTornado(targetPosition.Value));
+                    }
+                    m_bIsCasting = false;
+                    break;
+                }
+
+
+
             default:
                 m_bIsCasting = false;
                 break;
@@ -221,9 +237,19 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         GameObject obj = PhotonNetwork.InstantiateRoomObject("FlameThrower", pParentTransform.position, Quaternion.identity, 0, null);
 
         obj.GetComponent<TargetFollower>().Target = pParentTransform;
-        yield return new WaitForSeconds(m_fflamethrowerTimeInSeconds);
+        yield return new WaitForSeconds(m_fFlamethrowerTimeInSeconds);
         Destroy(obj);
         yield break;
+    }
+
+    public IEnumerator CastFlameTornado(Vector3 pPostition)
+    {
+        yield return new WaitForSeconds(m_fCastTimeInSeconds);
+
+        GameObject obj = PhotonNetwork.InstantiateRoomObject("FlameTornado", pPostition, Quaternion.identity, 0, null);
+
+        yield return new WaitForSeconds(m_fFlameTornadoifeSpanTimeInSeconds);
+        Destroy(obj);
     }
     #endregion
     private GameObject GetRunner()
@@ -242,5 +268,6 @@ public enum SpellType
     Firebolt,
     Fireball,
     Flamethrower,
+    FireTornado,
 
 }

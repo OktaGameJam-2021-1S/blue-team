@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 2919311669967983025}
   - component: {fileID: 9094633429580910332}
   - component: {fileID: 573041906301523525}
-  - component: {fileID: 2988423154678501179}
+  - component: {fileID: -7414132257344520299}
   m_Layer: 0
   m_Name: GreenGround
   m_TagString: Untagged
@@ -98,7 +98,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 2988423154678501179}
+  - {fileID: -7414132257344520299}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -118,7 +118,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 124
   m_CollisionDetection: 0
---- !u!114 &2988423154678501179
+--- !u!114 &-7414132257344520299
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
+  m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &8172321083661515681
 GameObject:
