@@ -1131,18 +1131,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ValidCasts:
+  - ElementsRequired: 0100000000000000
+    CastType: 8
   - ElementsRequired: 0200000000000000
     CastType: 3
-  - ElementsRequired: 0200000001000000
+  - ElementsRequired: 0300000000000000
+    CastType: 6
+  - ElementsRequired: 0100000002000000
     CastType: 4
+  - ElementsRequired: 
+    CastType: 0
+  - ElementsRequired: 0100000003000000
+    CastType: 11
   - ElementsRequired: 0200000003000000
     CastType: 5
   - ElementsRequired: 0200000002000000
     CastType: 2
-  - ElementsRequired: 0300000000000000
-    CastType: 6
   - ElementsRequired: 0300000003000000
-    CastType: 10
+    CastType: 6
+  - ElementsRequired: 0100000001000000
+    CastType: 9
 --- !u!114 &-6694737567451726579
 MonoBehaviour:
   m_ObjectHideFlags: 0
