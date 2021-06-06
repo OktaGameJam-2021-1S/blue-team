@@ -7,6 +7,8 @@ public class ShieldScript: MonoBehaviour
     public bool IsDestroyed { get; set ; }
     public PlayerRunner Runner {get; set ; }
     
+    public bool timeEnd {get; set; }
+
     private void Update()
     {
         if(!Runner.hasShield)
@@ -19,5 +21,6 @@ public class ShieldScript: MonoBehaviour
     {
         yield return new WaitForSeconds(durationTime);
         IsDestroyed = true;
+        timeEnd = true;
     }
 }
