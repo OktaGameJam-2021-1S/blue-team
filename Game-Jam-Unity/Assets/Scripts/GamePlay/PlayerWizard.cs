@@ -323,7 +323,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
 
         GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
 
-        while (!shield.IsDestroyed || shield.timeEnd)
+        while (!shield.IsDestroyed && !shield.timeEnd)
         {
             yield return null;
         }
@@ -347,7 +347,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
 
         GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
 
-         while (!shield.IsDestroyed || shield.timeEnd)
+         while (!shield.IsDestroyed && !shield.timeEnd)
         {
             yield return null;
         }
@@ -390,7 +390,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, multiplier);
         GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
 
-        while (!shield.IsDestroyed || shield.timeEnd)
+        while (!shield.IsDestroyed && !shield.timeEnd)
         {
             yield return null;
         }
