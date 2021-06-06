@@ -425,7 +425,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         {
             yield return null; //wait until meteor falls
         }
-        Destroy(obj);
+        PhotonNetwork.Destroy(obj);
         yield break;
     }
 
@@ -443,7 +443,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         {
             yield return null; //wait until tsunami gets in the end falls
         }
-        Destroy(obj);
+        PhotonNetwork.Destroy(obj);
         yield break;
     }
 
@@ -460,7 +460,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(m_fFloatTimeInSeconds+0.5f);
         floatBubble.DefloatObjects();
         yield return new WaitForSeconds(m_fFloatTimeInSeconds + 0.5f);
-        Destroy(obj);
+        PhotonNetwork.Destroy(obj);
         yield break;
     }
     #endregion

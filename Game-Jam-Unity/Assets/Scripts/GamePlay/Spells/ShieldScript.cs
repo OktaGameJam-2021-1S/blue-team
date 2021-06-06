@@ -1,29 +1,32 @@
-using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class ShieldScript: MonoBehaviour
 {
     public bool IsDestroyed { get; set ; }
     public PlayerRunner Runner {get; set ; }
-    private PhotonView photonView;
+    
     public bool timeEnd {get; set; }
 
+    private PhotonView _photonView;
 
-    private void Awake()
+    private void Start()
     {
-        photonView = GetComponent<PhotonView>();
+        _photonView = GetComponent<PhotonView>();
+        Runner = FindObjectOfType<PlayerRunner>();
     }
+
     private void Update()
     {
-        if (!photonView.IsMine)
+        if (_photonView.IsMine)
         {
-            return;
-        }
-        if (!Runner.hasShield)
-        {
-            IsDestroyed = true;
+            if (!Runner.hasShield)
+            {
+                IsDestroyed = true;
+            }
         }
     }
 
