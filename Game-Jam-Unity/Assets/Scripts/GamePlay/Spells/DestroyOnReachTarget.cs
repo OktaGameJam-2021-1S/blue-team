@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeteorScript : MonoBehaviour
+public class DestroyOnReachTarget : MonoBehaviour
 {
     public float speed = 30f;
     public float closestDistanceBetweenTarget = 2f;

@@ -16,7 +16,8 @@ public class PlayerWizard : MonoBehaviour
     public UIWizardView m_pUIWizardView;
     public Transform m_gVerticalSpellRoot;
     public Transform m_gAerialSpellRoot; // used to cast meteor from sky
-    public Transform m_gHorizontalSpellRoot; // used to cast meteor from sky
+    public Transform m_gHorizontalSpellRoot; // used to cast tsunami from left
+    public Transform m_gHorizontalDespawnSpellRoot; //used to destroy tsunami
 
     public WizardCastMagic WizardCastMagic;
 
@@ -262,7 +263,7 @@ public class PlayerWizard : MonoBehaviour
         yield return new WaitForSeconds(m_fCastTimeInSeconds);
 
         GameObject obj = PhotonNetwork.InstantiateRoomObject("Meteor", m_gAerialSpellRoot.transform.position, Quaternion.identity, 0, null);
-        MeteorScript meteor = obj.GetComponent<MeteorScript>();
+        DestroyOnReachTarget meteor = obj.GetComponent<DestroyOnReachTarget>();
         meteor.Target = pPosition;
         obj.transform.LookAt(pPosition);
 
@@ -279,6 +280,16 @@ public class PlayerWizard : MonoBehaviour
         Vector3 horizontalPosition = new Vector3(m_gHorizontalSpellRoot.position.x, m_gHorizontalSpellRoot.position.y, pPosition.z);
         GameObject obj = PhotonNetwork.InstantiateRoomObject("Tsunami", horizontalPosition, Quaternion.identity, 0, null);
         obj.transform.LookAt(pPosition);
+        DestroyOnReachTarget destroyOnTarget = obj.GetComponent<DestroyOnReachTarget>();
+        Vector3 horizontalDespawner = new Vector3(m_gHorizontalDespawnSpellRoot.position.x, m_gHorizontalDespawnSpellRoot.position.y, pPosition.z);
+        destroyOnTarget.Target = horizontalDespawner;
+        obj.transform.LookAt(horizontalDespawner);
+
+        while (!destroyOnTarget.IsDestroyed)
+        {
+            yield return null; //wait until tsunami gets in the end falls
+        }
+        Destroy(obj);
         yield break;
     }
     #endregion

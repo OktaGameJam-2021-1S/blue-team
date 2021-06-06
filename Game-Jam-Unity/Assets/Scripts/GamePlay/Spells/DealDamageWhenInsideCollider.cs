@@ -9,6 +9,7 @@ public class DealDamageWhenInsideCollider : MonoBehaviour
     public float m_fDamageCooldown = 0.25f;
     private PhotonView photonView;
     List<Enemy> enemiesToTakeDamage = new List<Enemy>();
+    PlayerRunner runner = null;
     private Coroutine damagePerTimeCoroutine;
 
     public void Awake()
@@ -19,10 +20,11 @@ public class DealDamageWhenInsideCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (photonView.IsMine)
         {
-            if (photonView.IsMine)
+            if (other.gameObject.CompareTag("Enemy"))
             {
+
                 Enemy enemy = other.gameObject.GetComponent<Enemy>();
                 if (enemy != null && !enemiesToTakeDamage.Contains(enemy))
                 {
@@ -37,14 +39,19 @@ public class DealDamageWhenInsideCollider : MonoBehaviour
                 }
 
             }
+            if (other.gameObject.CompareTag("Player"))
+            {
+                runner = other.GetComponent<PlayerRunner>();
+            }
         }
+
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (photonView.IsMine)
         {
-            if (photonView.IsMine)
+            if (other.gameObject.CompareTag("Enemy"))
             {
                 Enemy enemy = other.gameObject.GetComponent<Enemy>();
                 if (enemy != null)
@@ -63,6 +70,10 @@ public class DealDamageWhenInsideCollider : MonoBehaviour
                 }
 
             }
+            if (other.gameObject.CompareTag("Player"))
+            {
+                runner = null;
+            }
         }
     }
 
@@ -78,6 +89,11 @@ public class DealDamageWhenInsideCollider : MonoBehaviour
                     enemy.GetComponent<PhotonView>().RPC("LoseLife", RpcTarget.All, m_iDamage);
                 }
             }
+            if(runner != null)
+            {
+                runner.GetComponent<PhotonView>().RPC("LoseLife", RpcTarget.All); //runner always take 1 damage per tick
+            }
+
             yield return new WaitForSeconds(m_fDamageCooldown);
         }
     }

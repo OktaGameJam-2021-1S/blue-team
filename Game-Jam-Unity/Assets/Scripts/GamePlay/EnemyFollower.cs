@@ -20,7 +20,7 @@ public class EnemyFollower : Enemy
         base.Movement();
         
 
-        rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, Time.fixedDeltaTime * velocityMultiplier  * (transform.position.z < player.transform.position.z  ?  150 : -150) );
+        //rigidbody.velocity = new Vector3(rigidbody.velocity.x, 0, Time.fixedDeltaTime * velocityMultiplier  * (transform.position.z < player.transform.position.z  ?  150 : -150) );
 
         
     }
