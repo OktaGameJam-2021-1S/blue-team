@@ -40,6 +40,8 @@ public class PlayerWizard : MonoBehaviour
     public float m_fFlamethrowerTimeInSeconds = 2f;
     public float m_fFlameTornadoifeSpanTimeInSeconds = 5f;
 
+    public float m_fShieldTimeInSeconds = 30f;
+
 
     #region UNITY
 
@@ -210,7 +212,13 @@ public class PlayerWizard : MonoBehaviour
                     m_bIsCasting = false;
                     break;
                 }
-
+            
+            case SpellType.Shield:
+                {
+                    yield return StartCoroutine(CastShield(GetRunner().transform));
+                    m_bIsCasting = false;
+                    break;
+                }
 
 
             default:
@@ -243,6 +251,29 @@ public class PlayerWizard : MonoBehaviour
 
         obj.GetComponent<TargetFollower>().Target = pParentTransform;
         yield return new WaitForSeconds(m_fFlamethrowerTimeInSeconds);
+        Destroy(obj);
+        yield break;
+    }
+
+     public IEnumerator CastShield(Transform pParentTransform)
+    {
+        //CASTING
+        yield return new WaitForSeconds(m_fCastTimeInSeconds);
+
+        GameObject obj = PhotonNetwork.InstantiateRoomObject("Shield", pParentTransform.position, Quaternion.identity, 0, null);
+
+        obj.GetComponent<TargetFollower>().Target = pParentTransform;
+        ShieldScript shield = obj.GetComponent<ShieldScript>();
+
+        pParentTransform.GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
+
+         while (!shield.IsDestroyed)
+        {
+            yield return null;
+        }
+
+        pParentTransform.GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, false);
+
         Destroy(obj);
         yield break;
     }
@@ -300,5 +331,6 @@ public enum SpellType
     Flamethrower,
     FireTornado,
     Tsunami,
+    Shield,
 
 }
