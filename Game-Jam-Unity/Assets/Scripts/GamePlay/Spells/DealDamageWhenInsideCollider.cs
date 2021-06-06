@@ -7,6 +7,7 @@ public class DealDamageWhenInsideCollider : MonoBehaviour
 {
     public int m_iDamage = 1;
     public float m_fDamageCooldown = 0.25f;
+    public bool CanDamagePlayer = true;
     private PhotonView photonView;
     List<Enemy> enemiesToTakeDamage = new List<Enemy>();
     PlayerRunner runner = null;
@@ -39,7 +40,7 @@ public class DealDamageWhenInsideCollider : MonoBehaviour
                 }
 
             }
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.CompareTag("Player") && CanDamagePlayer)
             {
                 runner = other.GetComponent<PlayerRunner>();
             }

@@ -115,6 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_iDamage: 1
   m_fDamageCooldown: 0.25
+  CanDamagePlayer: 0
 --- !u!114 &5237633101441874249
 MonoBehaviour:
   m_ObjectHideFlags: 0
