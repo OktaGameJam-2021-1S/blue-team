@@ -29,7 +29,8 @@ namespace GamePlay
 
         public ElementSpawn[] ElementsPrefabs;
 
-        public List<ElementSpawn> PoolElements;
+        public List<ElementSpawn> PoolElements = new List<ElementSpawn>();
+        public List<ElementSpawn> UsingElements = new List<ElementSpawn>();
         
         public List<Ground> Grounds = new List<Ground>();
 
@@ -110,9 +111,10 @@ namespace GamePlay
                     position.y = YObstacle;
                     for (int i = 0; i < PoolElements.Count; i++)
                     {
-                        if (PoolElements[i].ElementType == type)
+                        if (PoolElements[i].ElementType == type && !UsingElements.Contains(PoolElements[i]))
                         {
                             PoolElements[i].transform.position = position;
+                            UsingElements.Add(PoolElements[i]);
                             spawnedFromPool = true;
                             break;
                         }
@@ -128,6 +130,7 @@ namespace GamePlay
                                     ElementsPrefabs[i].name,
                                     position, Quaternion.identity, 0, null);
                                 PoolElements.Add(obj.GetComponent<ElementSpawn>());
+                                UsingElements.Add(obj.GetComponent<ElementSpawn>());
                                 break;
                             }
                         }

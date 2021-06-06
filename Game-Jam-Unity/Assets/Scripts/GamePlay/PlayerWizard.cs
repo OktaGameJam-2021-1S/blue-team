@@ -5,10 +5,11 @@ using GamePlay;
 using Photon.Pun;
 using Photon.Pun.Demo.Asteroids;
 using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class PlayerWizard : MonoBehaviour
+public class PlayerWizard : MonoBehaviourPunCallbacks
 {
     public float RotationSpeed = 90.0f;
     public float MovementSpeed = 2.0f;
@@ -79,8 +80,13 @@ public class PlayerWizard : MonoBehaviour
             // CastMagic(m_eCurrentMagicType);
             if(SelectedElements.Count == 0)
                 return;
+            List<ElementType> respawn = new List<ElementType>(SelectedElements);
+            if(SelectedElements.Count == 1)
+                SelectedElements.Add(ElementType.None);
+            
             CastMagic(WizardCastMagic.CastSpell(SelectedElements.ToArray()));
-            GamePlayNetworkManager.Instance.ElementsToSpawn.AddRange(new List<ElementType>(SelectedElements));
+            
+            GamePlayNetworkManager.Instance.ElementsToSpawn.AddRange(respawn);
             SelectedElements.Clear();
             rigidbody.velocity = Vector3.zero;
         }
@@ -92,6 +98,19 @@ public class PlayerWizard : MonoBehaviour
         
         float horizontal = Input.GetAxisRaw("Horizontal");
         rigidbody.velocity = new Vector3(horizontal, 0, 0) * MovementSpeed * Time.fixedDeltaTime;
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
+        if (photonView.IsMine){
+            if (changedProps.ContainsKey(AsteroidsGame.PLAYER_ELEMENTS))
+            {
+                var elementType = (ElementType)changedProps[AsteroidsGame.PLAYER_ELEMENTS];
+                Elements.Add(elementType);
+                SyncElement();
+            }
+        }
     }
 
     private void SelectElement()
@@ -119,19 +138,19 @@ public class PlayerWizard : MonoBehaviour
     }
     private ElementType GetElementType()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad0) || Input.GetKeyDown(KeyCode.Alpha0))
+        if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
         {
             return ElementType.Fire;
         }
-        if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
         {
             return ElementType.Water;
         }
-        if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
         {
             return ElementType.Air;
         }
-        if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4))
         {
             return ElementType.Earth;
         }
@@ -145,7 +164,7 @@ public class PlayerWizard : MonoBehaviour
             return;
         }
         m_bIsCasting = true;
-        StartCoroutine(CastMagicCoroutine(m_eCurrentMagicType));
+        StartCoroutine(CastMagicCoroutine(eMagicType));
     }
 
 
