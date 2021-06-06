@@ -18,6 +18,8 @@ public class PlayerRunner : MonoBehaviour
     public GameObject EngineTrail;
     public GameObject BulletPrefab;
     public bool hasShield = false;
+    public ParticleSystem OnTakeHit;
+    public ParticleSystem OnLoseShield;
 
     private PhotonView photonView;
 
@@ -71,11 +73,13 @@ public class PlayerRunner : MonoBehaviour
             if (hasShield)
             {
                 hasShield = false;
+                OnLoseShield.Play();
                 return;
             }
             object lives;
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_LIVES, out lives))
             {
+                OnTakeHit.Play();
                 PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable {{AsteroidsGame.PLAYER_LIVES, ((int) lives <= 1) ? 0 : ((int) lives - 1)}});
             }
         }
