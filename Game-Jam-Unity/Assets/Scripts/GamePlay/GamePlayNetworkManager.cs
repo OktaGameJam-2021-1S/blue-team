@@ -306,7 +306,7 @@ namespace GamePlay
                 StartCoroutine(SpawnElements());
                 StartCoroutine(CountPoints());
             }
-            else{
+            {
                 Vector3 position = SpawnPointRunner.position;
                 Quaternion rotation = Quaternion.Euler(0.0f, 0, 0.0f);
                 PhotonNetwork.Instantiate("Runner", position, rotation, 0);      // avoid this call on rejoin ( was network instantiated before)

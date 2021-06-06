@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ExitGames.Client.Photon;
 using Photon.Pun;
@@ -15,6 +14,7 @@ public class GamePlayUI :  MonoBehaviourPunCallbacks
     {
         public ElementType element;
         public Image Visual;
+        public Text Amount;
     }
     
     public List<ElementVisual> VisualElements;
@@ -34,13 +34,14 @@ public class GamePlayUI :  MonoBehaviourPunCallbacks
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
-        if (propertiesThatChanged.ContainsKey(AsteroidsGame.PLAYER_ELEMENTS))
+        if (propertiesThatChanged.ContainsKey(AsteroidsGame.PLAYER_ELEMENTINFO))
         {
-            var elementsActives = (ElementType)propertiesThatChanged[AsteroidsGame.PLAYER_ELEMENTS];
-            foreach (var element in VisualElements)
-            {
-                element.Visual.gameObject.SetActive((elementsActives & element.element) != 0);
-            }
+            var Element = (ElementType)propertiesThatChanged[AsteroidsGame.PLAYER_ELEMENTINFO];
+            var Amount = (int)propertiesThatChanged[AsteroidsGame.PLAYER_ELEMENTAMOUNT];
+            
+            var ElementVisual = VisualElements.Find((element)=> element.element == Element);
+            ElementVisual.Amount.text = Amount.ToString();
+            ElementVisual.Visual.gameObject.SetActive(Amount > 0);
         }
     }
 

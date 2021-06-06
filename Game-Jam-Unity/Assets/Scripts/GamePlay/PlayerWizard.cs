@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using GamePlay;
 using Photon.Pun;
 using Photon.Pun.Demo.Asteroids;
 using Photon.Pun.UtilityScripts;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class PlayerWizard : MonoBehaviour
 {
@@ -51,7 +53,13 @@ public class PlayerWizard : MonoBehaviour
         m_gRunner = GameObject.FindGameObjectWithTag("Player");
     }
 
-
+    private void Start()
+    {
+        if (photonView.IsMine)
+        {
+            SyncElement();
+        }
+    }
 
 
     private void Update()
@@ -89,12 +97,23 @@ public class PlayerWizard : MonoBehaviour
         ElementType element = GetElementType();
         if (element != ElementType.None)
         {
-            if (Elements.Contains(element) && SelectedElements.Count <= 2)
+            if (Elements.Contains(element) && SelectedElements.Count < 2)
             {
                 SelectedElements.Add(element);
                 Elements.Remove(element);
+                
+                SyncElement();
             }
         }
+    }
+
+    private void SyncElement()
+    {
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{AsteroidsGame.PLAYER_ELEMENTINFO, ElementType.Fire}, {AsteroidsGame.PLAYER_ELEMENTAMOUNT, Elements.FindAll((element) => element == ElementType.Fire).Count}});
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{AsteroidsGame.PLAYER_ELEMENTINFO, ElementType.Air}, {AsteroidsGame.PLAYER_ELEMENTAMOUNT, Elements.FindAll((element) => element == ElementType.Air).Count}});
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{AsteroidsGame.PLAYER_ELEMENTINFO, ElementType.Earth}, {AsteroidsGame.PLAYER_ELEMENTAMOUNT, Elements.FindAll((element) => element == ElementType.Earth).Count}});
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable{{AsteroidsGame.PLAYER_ELEMENTINFO, ElementType.Water}, {AsteroidsGame.PLAYER_ELEMENTAMOUNT, Elements.FindAll((element) => element == ElementType.Water).Count}});
+   
     }
     private ElementType GetElementType()
     {
