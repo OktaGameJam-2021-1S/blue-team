@@ -138,11 +138,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 895067482190405784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.25, y: 6.62, z: 2.32}
+  m_LocalPosition: {x: 8.25, y: 2.5, z: -6.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1416706036040497208}
-  m_RootOrder: 31
+  m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &1980945863039642259
 Light:
@@ -230,7 +230,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1040852344419230994}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43, y: 2.74, z: -1.26}
+  m_LocalPosition: {x: 43, y: 1.05, z: -4.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1416706036040497208}
@@ -506,7 +506,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1564569443926438630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 34.75, y: 2.74, z: -1.26}
+  m_LocalPosition: {x: 34.75, y: 1.26, z: -4.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1416706036040497208}
@@ -665,98 +665,6 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1 &2762326937067210255
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6584918571962954041}
-  - component: {fileID: 894325619562915285}
-  m_Layer: 0
-  m_Name: FrontLight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6584918571962954041
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2762326937067210255}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.5, y: 6.62, z: 2.32}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1416706036040497208}
-  m_RootOrder: 30
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!108 &894325619562915285
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2762326937067210255}
-  m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 2
-  m_Shape: 0
-  m_Color: {r: 0.7264151, g: 0.46530262, b: 0, a: 1}
-  m_Intensity: 1
-  m_Range: 9.063873
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 1
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!1 &4210396069042038202
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,7 +722,6 @@ Transform:
   - {fileID: 8977575374722108643}
   - {fileID: 6984616425506525446}
   - {fileID: 7532021836419748995}
-  - {fileID: 6584918571962954041}
   - {fileID: 6255067118427726597}
   m_Father: {fileID: 1642434925097741321}
   m_RootOrder: 10
@@ -952,6 +859,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dungeon-wall-stone (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1438765391367698, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4693225784028992, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1026,6 +937,10 @@ PrefabInstance:
     - target: {fileID: 1189422364011162, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
       propertyPath: m_Name
       value: dungeon-floor-stone (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189422364011162, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4037245989903332, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
       propertyPath: m_RootOrder
@@ -1174,6 +1089,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dungeon-floor-stone (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1189422364011162, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4037245989903332, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1321,6 +1240,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dungeon-wall-stone (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1438765391367698, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4693225784028992, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1395,6 +1318,10 @@ PrefabInstance:
     - target: {fileID: 1438765391367698, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
       propertyPath: m_Name
       value: dungeon-wall-stone (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1438765391367698, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4693225784028992, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
       propertyPath: m_RootOrder
@@ -1545,6 +1472,10 @@ PrefabInstance:
     - target: {fileID: 1189422364011162, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
       propertyPath: m_Name
       value: dungeon-floor-stone (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189422364011162, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4037245989903332, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
       propertyPath: m_RootOrder
@@ -1764,6 +1695,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dungeon-wall-stone (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1438765391367698, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4693225784028992, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1839,6 +1774,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dungeon-floor-stone (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 1189422364011162, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4037245989903332, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -1910,6 +1849,10 @@ PrefabInstance:
     - target: {fileID: 1438765391367698, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
       propertyPath: m_Name
       value: dungeon-wall-stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 1438765391367698, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4693225784028992, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
       propertyPath: m_RootOrder
@@ -2213,7 +2156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4339665134250328, guid: f1732e42e04c34d68bd94ec089baf9f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 32.3
+      value: 32.05
       objectReference: {fileID: 0}
     - target: {fileID: 4339665134250328, guid: f1732e42e04c34d68bd94ec089baf9f6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2491,6 +2434,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dungeon-floor-stone (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1189422364011162, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4037245989903332, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2562,6 +2509,10 @@ PrefabInstance:
     - target: {fileID: 1438765391367698, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
       propertyPath: m_Name
       value: dungeon-wall-stone (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1438765391367698, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4693225784028992, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
       propertyPath: m_RootOrder
@@ -2638,6 +2589,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dungeon-wall-stone (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1438765391367698, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4693225784028992, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -2713,6 +2668,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dungeon-door-stone
       objectReference: {fileID: 0}
+    - target: {fileID: 1781130428969628, guid: 17462986d76284d599dd3f87e1100aea, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4740353612503842, guid: 17462986d76284d599dd3f87e1100aea, type: 3}
       propertyPath: m_RootOrder
       value: 19
@@ -2787,6 +2746,10 @@ PrefabInstance:
     - target: {fileID: 1189422364011162, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
       propertyPath: m_Name
       value: dungeon-floor-stone (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189422364011162, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4037245989903332, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
       propertyPath: m_RootOrder
@@ -3077,6 +3040,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dungeon-wall-stone (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 1438765391367698, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4693225784028992, guid: 752bb20fed6c14516baa62c2fa14ac6e, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -3152,6 +3119,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: dungeon-floor-stone (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 1189422364011162, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4037245989903332, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -3223,6 +3194,10 @@ PrefabInstance:
     - target: {fileID: 1189422364011162, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
       propertyPath: m_Name
       value: dungeon-floor-stone (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189422364011162, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4037245989903332, guid: 6f65b76c628f14a8cb695d3fb4b9285a, type: 3}
       propertyPath: m_RootOrder
