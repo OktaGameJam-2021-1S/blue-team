@@ -21,14 +21,14 @@ public class MoveToRandomDirection : MonoBehaviour
         transform.Translate(transform.forward * Time.deltaTime * velocity);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("InvisibleWalls"))
         {
             if (photonView.IsMine)
             {
-                Vector3 newDirection = Vector3.Reflect(transform.forward.normalized, collision.contacts[0].normal);
-                transform.localEulerAngles = newDirection ;
+                Vector3 newDirection = Vector3.Reflect(transform.forward, collision.transform.forward);
+                transform.rotation = Quaternion.LookRotation(newDirection, Vector3.up) ;
             }
         }
     }

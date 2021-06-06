@@ -25,13 +25,24 @@ public class EnemyArcher : Enemy
     void Start()
     {
         ground = GameObject.FindWithTag("Ground").transform;
-        position = ground.TransformPoint(Random.Range(0.40f, 0.6f), 0, 0);
+        position = ground.TransformPoint(Random.Range(-.15f, 0.15f), 0, 0);
         player = GameObject.FindWithTag("Player").transform;
         timeBtwShots = startTimeBtwShots;
     }
 
     void Update()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+
+        if (!controllable)
+        {
+            return;
+        }
+        Movement();
+        
         if(timeBtwShots <= 0)
         {
             PhotonNetwork.Instantiate(projectile.name, transform.position, Quaternion.identity);
@@ -41,6 +52,7 @@ public class EnemyArcher : Enemy
         {
             timeBtwShots -= Time.deltaTime;
         }
+        
     }
 
     public override void Movement()
