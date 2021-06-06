@@ -339,12 +339,13 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
     {
         //CASTING
         yield return new WaitForSeconds(m_fCastTimeInSeconds);
-		GameObject obj = PhotonNetwork.InstantiateRoomObject("Heal", pParentTransform.position, Quaternion.identity, 0, null);
+		GameObject obj = PhotonNetwork.InstantiateRoomObject("Shield", pParentTransform.position, Quaternion.identity, 0, null);
 
         obj.GetComponent<TargetFollower>().Target = pParentTransform;
         ShieldScript shield = obj.GetComponent<ShieldScript>();
-        shield.Runner = GetRunner().GetComponent<PlayerRunner>();
-
+        var runner = GetRunner().GetComponent<PlayerRunner>();
+        shield.Runner = runner;
+        runner.hasShield = true;
         StartCoroutine(shield.CDEnd(m_fShieldTimeInSeconds));
 
         GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
@@ -386,7 +387,9 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         GameObject objShield = PhotonNetwork.InstantiateRoomObject("Shield", pTransform.position, Quaternion.identity, 0, null);
         objShield.GetComponent<TargetFollower>().Target = pTransform;
         ShieldScript shield = objShield.GetComponent<ShieldScript>();
-        shield.Runner = GetRunner().GetComponent<PlayerRunner>();
+        var runner = GetRunner().GetComponent<PlayerRunner>();
+        shield.Runner = runner;
+        runner.hasShield = true;
 
         objSpeed.GetComponent<TargetFollower>().Target = pTransform;
         GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, multiplier);
