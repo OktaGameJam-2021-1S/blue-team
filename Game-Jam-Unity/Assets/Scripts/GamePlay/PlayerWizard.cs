@@ -304,7 +304,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
 
         obj.GetComponent<TargetFollower>().Target = pParentTransform;
         yield return new WaitForSeconds(m_fFlamethrowerTimeInSeconds);
-        Destroy(obj);
+        PhotonNetwork.Destroy(obj);
         yield break;
     }
 
@@ -315,14 +315,16 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
 
         GameObject obj = PhotonNetwork.InstantiateRoomObject("Shield", pParentTransform.position, Quaternion.identity, 0, null);
 
+ 
         obj.GetComponent<TargetFollower>().Target = pParentTransform;
         ShieldScript shield = obj.GetComponent<ShieldScript>();
-        shield.Runner = GetRunner().GetComponent<PlayerRunner>();
-
-        StartCoroutine(shield.CDEnd(m_fShieldTimeInSeconds));
-
+        var runner = GetRunner().GetComponent<PlayerRunner>();
+        shield.Runner = runner;
+        runner.hasShield = true;
         GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
-
+        
+        StartCoroutine(shield.CDEnd(m_fShieldTimeInSeconds));
+        
         while (!shield.IsDestroyed && !shield.timeEnd)
         {
             yield return null;
@@ -330,7 +332,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
 
         pParentTransform.GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, false);
 
-        Destroy(obj);
+        PhotonNetwork.Destroy(obj);
         yield break;
     }
      public IEnumerator CastShieldAndHeal(Transform pParentTransform)
@@ -359,7 +361,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
 
         pParentTransform.GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, false);
 
-        Destroy(obj);
+        PhotonNetwork.Destroy(obj);
         yield break;
     }
     public IEnumerator CastSpeedBuff(float multiplier, Transform pTransform, string pPrefabName)
@@ -372,7 +374,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, multiplier);
         yield return new WaitForSeconds(m_fSpeedBuffTimeInSeconds);
         GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, 1f);
-        Destroy(obj);
+        PhotonNetwork.Destroy(obj);
         yield break;
     }
 
@@ -397,8 +399,8 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
 
         GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, false);
         GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, 1f);
-        Destroy(objSpeed);
-        Destroy(objShield);
+        PhotonNetwork.Destroy(objSpeed);
+        PhotonNetwork.Destroy(objShield);
         yield break;
     }
 
@@ -409,7 +411,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         GameObject obj = PhotonNetwork.InstantiateRoomObject("FlameTornado", pPostition, Quaternion.identity, 0, null);
 
         yield return new WaitForSeconds(m_fFlameTornadoifeSpanTimeInSeconds);
-        Destroy(obj);
+        PhotonNetwork.Destroy(obj);
     }
 
     public IEnumerator CastMeteor(Vector3 pPosition)
