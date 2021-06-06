@@ -20,7 +20,6 @@ public class ShieldScript: MonoBehaviour
     public IEnumerator CDEnd(float durationTime)
     {
         yield return new WaitForSeconds(durationTime);
-        IsDestroyed = true;
         timeEnd = true;
     }
 }

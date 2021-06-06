@@ -323,7 +323,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
 
         GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
 
-         while (!shield.IsDestroyed)
+        while (!shield.IsDestroyed || shield.timeEnd)
         {
             yield return null;
         }
@@ -345,9 +345,9 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
 
         StartCoroutine(shield.CDEnd(m_fShieldTimeInSeconds));
 
-        GetRunner().GetComponent<PhotonView>().RPC("SetShieldAndGainLife", RpcTarget.All, true);
+        GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
 
-         while (!shield.IsDestroyed)
+         while (!shield.IsDestroyed || shield.timeEnd)
         {
             yield return null;
         }
@@ -357,7 +357,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
             pParentTransform.GetComponent<PhotonView>().RPC("SetShieldAndGainLife", RpcTarget.All, false);
         }
 
-        pParentTransform.GetComponent<PhotonView>().RPC("SetShieldAndGainLife", RpcTarget.All, false);
+        pParentTransform.GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, false);
 
         Destroy(obj);
         yield break;
@@ -390,7 +390,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, multiplier);
         GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
 
-        while (!shield.IsDestroyed)
+        while (!shield.IsDestroyed || shield.timeEnd)
         {
             yield return null;
         }
