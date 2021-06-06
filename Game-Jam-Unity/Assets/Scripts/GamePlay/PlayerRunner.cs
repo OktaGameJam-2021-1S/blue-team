@@ -12,11 +12,14 @@ public class PlayerRunner : MonoBehaviour
     public float RotationSpeed = 90.0f;
     public float MovementSpeed = 2.0f;
     public float MaxSpeed = 0.2f;
+    public float BuffMultiplier = 1f;
 
     public ParticleSystem Destruction;
     public GameObject EngineTrail;
     public GameObject BulletPrefab;
     public bool hasShield = false;
+    public ParticleSystem OnTakeHit;
+    public ParticleSystem OnLoseShield;
 
     private PhotonView photonView;
 
@@ -58,7 +61,7 @@ public class PlayerRunner : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         float diagonalMultiplier = horizontal != 0 && vertical != 0 ? 0.75f: 1f;
-        rigidbody.velocity = new Vector3(horizontal, 0, vertical) * MovementSpeed * Time.fixedDeltaTime * diagonalMultiplier;
+        rigidbody.velocity = new Vector3(horizontal, 0, vertical) * MovementSpeed * Time.fixedDeltaTime * diagonalMultiplier * BuffMultiplier;
 
    
     }
@@ -67,9 +70,16 @@ public class PlayerRunner : MonoBehaviour
     {
         if (photonView.IsMine)
         {
+            if (hasShield)
+            {
+                hasShield = false;
+                OnLoseShield.Play();
+                return;
+            }
             object lives;
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(AsteroidsGame.PLAYER_LIVES, out lives))
             {
+                OnTakeHit.Play();
                 PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable {{AsteroidsGame.PLAYER_LIVES, ((int) lives <= 1) ? 0 : ((int) lives - 1)}});
             }
         }
@@ -83,7 +93,16 @@ public class PlayerRunner : MonoBehaviour
             hasShield = value;
         }
     }
+
+    [PunRPC]
+    public void SetSpeedBuff(float value)
+    {
+        if (photonView.IsMine)
+        {
+            BuffMultiplier = value;
+        }
+    }
     #endregion
-    
-    
+
+
 }
