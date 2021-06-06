@@ -17,7 +17,8 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
     public UIWizardView m_pUIWizardView;
     public Transform m_gVerticalSpellRoot;
     public Transform m_gAerialSpellRoot; // used to cast meteor from sky
-    public Transform m_gHorizontalSpellRoot; // used to cast meteor from sky
+    public Transform m_gHorizontalSpellRoot; // used to cast tsunami from left
+    public Transform m_gHorizontalDespawnSpellRoot; //used to destroy tsunami
 
     public WizardCastMagic WizardCastMagic;
 
@@ -40,6 +41,8 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
     public float m_fCastTimeInSeconds = 1f;
     public float m_fFlamethrowerTimeInSeconds = 2f;
     public float m_fFlameTornadoifeSpanTimeInSeconds = 5f;
+
+    public float m_fShieldTimeInSeconds = 30f;
 
 
     #region UNITY
@@ -229,7 +232,13 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
                     m_bIsCasting = false;
                     break;
                 }
-
+            
+            case SpellType.Shield:
+                {
+                    yield return StartCoroutine(CastShield(GetRunner().transform));
+                    m_bIsCasting = false;
+                    break;
+                }
 
 
             default:
@@ -266,6 +275,29 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         yield break;
     }
 
+     public IEnumerator CastShield(Transform pParentTransform)
+    {
+        //CASTING
+        yield return new WaitForSeconds(m_fCastTimeInSeconds);
+
+        GameObject obj = PhotonNetwork.InstantiateRoomObject("Shield", pParentTransform.position, Quaternion.identity, 0, null);
+
+        obj.GetComponent<TargetFollower>().Target = pParentTransform;
+        ShieldScript shield = obj.GetComponent<ShieldScript>();
+
+        pParentTransform.GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
+
+         while (!shield.IsDestroyed)
+        {
+            yield return null;
+        }
+
+        pParentTransform.GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, false);
+
+        Destroy(obj);
+        yield break;
+    }
+
     public IEnumerator CastFlameTornado(Vector3 pPostition)
     {
         yield return new WaitForSeconds(m_fCastTimeInSeconds);
@@ -281,7 +313,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(m_fCastTimeInSeconds);
 
         GameObject obj = PhotonNetwork.InstantiateRoomObject("Meteor", m_gAerialSpellRoot.transform.position, Quaternion.identity, 0, null);
-        MeteorScript meteor = obj.GetComponent<MeteorScript>();
+        DestroyOnReachTarget meteor = obj.GetComponent<DestroyOnReachTarget>();
         meteor.Target = pPosition;
         obj.transform.LookAt(pPosition);
 
@@ -298,6 +330,16 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         Vector3 horizontalPosition = new Vector3(m_gHorizontalSpellRoot.position.x, m_gHorizontalSpellRoot.position.y, pPosition.z);
         GameObject obj = PhotonNetwork.InstantiateRoomObject("Tsunami", horizontalPosition, Quaternion.identity, 0, null);
         obj.transform.LookAt(pPosition);
+        DestroyOnReachTarget destroyOnTarget = obj.GetComponent<DestroyOnReachTarget>();
+        Vector3 horizontalDespawner = new Vector3(m_gHorizontalDespawnSpellRoot.position.x, m_gHorizontalDespawnSpellRoot.position.y, pPosition.z);
+        destroyOnTarget.Target = horizontalDespawner;
+        obj.transform.LookAt(horizontalDespawner);
+
+        while (!destroyOnTarget.IsDestroyed)
+        {
+            yield return null; //wait until tsunami gets in the end falls
+        }
+        Destroy(obj);
         yield break;
     }
     #endregion
@@ -319,5 +361,6 @@ public enum SpellType
     Flamethrower,
     FireTornado,
     Tsunami,
+    Shield,
 
 }
