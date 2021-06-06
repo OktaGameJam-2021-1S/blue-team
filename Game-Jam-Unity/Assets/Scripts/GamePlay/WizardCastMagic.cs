@@ -15,12 +15,13 @@ public class WizardCastMagic : MonoBehaviour
 
     public SpellType CastSpell(params ElementType[] elementTypes)
     {
+        List<ElementType> selectedElements = new List<ElementType>(elementTypes);
         for (int i = 0; i < ValidCasts.Count; i++)
         {
             bool contains = true;
-            for (int j = 0; j < elementTypes.Length; j++)
+            for (int j = 0; j < ValidCasts[i].ElementsRequired.Count; j++)
             {
-                contains &= ValidCasts[i].ElementsRequired.Contains(elementTypes[j]);
+                contains &= selectedElements.Contains(ValidCasts[i].ElementsRequired[j]);
             }
 
             if (contains)

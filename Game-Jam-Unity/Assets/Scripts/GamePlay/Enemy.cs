@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
 {
     public float velocityMultiplier = 1;
     public int Lives = 1;
-    private PhotonView photonView;
+    protected PhotonView photonView;
 
 #pragma warning disable 0109
     public new Rigidbody rigidbody;
@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     private float acceleration = 0.0f;
     private float shootingTimer = 0.0f;
 
-    private bool controllable = true;
+    protected bool controllable = true;
 
     #region UNITY
 

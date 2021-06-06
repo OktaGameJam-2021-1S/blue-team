@@ -16,6 +16,7 @@ public class PlayerRunner : MonoBehaviour
     public ParticleSystem Destruction;
     public GameObject EngineTrail;
     public GameObject BulletPrefab;
+    public bool hasShield = false;
 
     private PhotonView photonView;
 
@@ -71,6 +72,15 @@ public class PlayerRunner : MonoBehaviour
             {
                 PhotonNetwork.CurrentRoom.SetCustomProperties(new Hashtable {{AsteroidsGame.PLAYER_LIVES, ((int) lives <= 1) ? 0 : ((int) lives - 1)}});
             }
+        }
+    }
+
+    [PunRPC]
+    public void SetShield(bool value)
+    {
+        if (photonView.IsMine)
+        {
+            hasShield = value;
         }
     }
     #endregion

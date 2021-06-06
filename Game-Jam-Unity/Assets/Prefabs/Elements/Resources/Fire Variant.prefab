@@ -70,7 +70,7 @@ PrefabInstance:
     - target: {fileID: 4299428752533657802, guid: 1c785cc955e20b945966255ddb6a684f,
         type: 3}
       propertyPath: ElementType
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4299428752533657805, guid: 1c785cc955e20b945966255ddb6a684f,
         type: 3}
@@ -87,5 +87,11 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7931389650848220028, guid: 1c785cc955e20b945966255ddb6a684f,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f68ed2f8800c6bd45b3eea217fc38d34,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c785cc955e20b945966255ddb6a684f, type: 3}
