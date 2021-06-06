@@ -623,6 +623,8 @@ MonoBehaviour:
     CastType: 2
   - ElementsRequired: 0300000000000000
     CastType: 6
+  - ElementsRequired: 0300000003000000
+    CastType: 7
 --- !u!114 &-6694737567451726579
 MonoBehaviour:
   m_ObjectHideFlags: 0

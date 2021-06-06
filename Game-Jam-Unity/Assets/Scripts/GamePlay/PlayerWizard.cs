@@ -47,7 +47,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
     public float m_fFloatTimeInSeconds = 1f;
     public float m_fFlameTornadoifeSpanTimeInSeconds = 5f;
 
-    public float m_fShieldTimeInSeconds = 30f;
+    public float m_fShieldTimeInSeconds = 10f;
 
 
     #region UNITY
@@ -259,6 +259,20 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
                     break;
                 }
 
+			case SpellType.Heal:
+                {
+                    yield return StartCoroutine(CastShieldAndHeal(GetRunner().transform));
+                    m_bIsCasting = false;
+                    break;
+                }
+
+            case SpellType.ShieldSpeed:
+                {
+                    yield return StartCoroutine(CastShieldSpeedBuff(m_fSpeedBuffSpeed, GetRunner().transform, "SuperSpeedBuff"));
+                    m_bIsCasting = false;
+                    break;
+                }
+
 
             default:
                 m_bIsCasting = false;
@@ -305,6 +319,8 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         ShieldScript shield = obj.GetComponent<ShieldScript>();
         shield.Runner = GetRunner().GetComponent<PlayerRunner>();
 
+        StartCoroutine(shield.CDEnd(m_fShieldTimeInSeconds));
+
         GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
 
          while (!shield.IsDestroyed)
@@ -317,7 +333,35 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         Destroy(obj);
         yield break;
     }
+     public IEnumerator CastShieldAndHeal(Transform pParentTransform)
+    {
+        //CASTING
+        yield return new WaitForSeconds(m_fCastTimeInSeconds);
+		GameObject obj = PhotonNetwork.InstantiateRoomObject("Heal", pParentTransform.position, Quaternion.identity, 0, null);
 
+        obj.GetComponent<TargetFollower>().Target = pParentTransform;
+        ShieldScript shield = obj.GetComponent<ShieldScript>();
+        shield.Runner = GetRunner().GetComponent<PlayerRunner>();
+
+        StartCoroutine(shield.CDEnd(m_fShieldTimeInSeconds));
+
+        GetRunner().GetComponent<PhotonView>().RPC("SetShieldAndGainLife", RpcTarget.All, true);
+
+         while (!shield.IsDestroyed)
+        {
+            yield return null;
+        }
+
+        if(shield.timeEnd)
+        {
+            pParentTransform.GetComponent<PhotonView>().RPC("SetShieldAndGainLife", RpcTarget.All, false);
+        }
+
+        pParentTransform.GetComponent<PhotonView>().RPC("SetShieldAndGainLife", RpcTarget.All, false);
+
+        Destroy(obj);
+        yield break;
+    }
     public IEnumerator CastSpeedBuff(float multiplier, Transform pTransform, string pPrefabName)
     {
         //CASTING
@@ -329,6 +373,32 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(m_fSpeedBuffTimeInSeconds);
         GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, 1f);
         Destroy(obj);
+        yield break;
+    }
+
+    public IEnumerator CastShieldSpeedBuff(float multiplier, Transform pTransform, string pPrefabName)
+    {
+        //CASTING
+        yield return new WaitForSeconds(m_fCastTimeInSeconds);
+        GameObject objSpeed = PhotonNetwork.InstantiateRoomObject(pPrefabName, pTransform.position, Quaternion.identity, 0, null);
+        GameObject objShield = PhotonNetwork.InstantiateRoomObject("Shield", pTransform.position, Quaternion.identity, 0, null);
+        objShield.GetComponent<TargetFollower>().Target = pTransform;
+        ShieldScript shield = objShield.GetComponent<ShieldScript>();
+        shield.Runner = GetRunner().GetComponent<PlayerRunner>();
+
+        objSpeed.GetComponent<TargetFollower>().Target = pTransform;
+        GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, multiplier);
+        GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
+
+        while (!shield.IsDestroyed)
+        {
+            yield return null;
+        }
+
+        GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, false);
+        GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, 1f);
+        Destroy(objSpeed);
+        Destroy(objShield);
         yield break;
     }
 
@@ -416,5 +486,7 @@ public enum SpellType
     Float,
     Speed,
     SuperSpeed,
+	Heal,
+	ShieldSpeed,
 
 }
