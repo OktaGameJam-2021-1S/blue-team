@@ -259,6 +259,13 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
                     break;
                 }
 
+            case SpellType.ShieldSpeed:
+                {
+                    yield return StartCoroutine(CastShieldSpeedBuff(m_fSpeedBuffSpeed, GetRunner().transform, "SuperSpeedBuff"));
+                    m_bIsCasting = false;
+                    break;
+                }
+
 
             default:
                 m_bIsCasting = false;
@@ -329,6 +336,32 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(m_fSpeedBuffTimeInSeconds);
         GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, 1f);
         Destroy(obj);
+        yield break;
+    }
+
+    public IEnumerator CastShieldSpeedBuff(float multiplier, Transform pTransform, string pPrefabName)
+    {
+        //CASTING
+        yield return new WaitForSeconds(m_fCastTimeInSeconds);
+        GameObject objSpeed = PhotonNetwork.InstantiateRoomObject(pPrefabName, pTransform.position, Quaternion.identity, 0, null);
+        GameObject objShield = PhotonNetwork.InstantiateRoomObject("Shield", pTransform.position, Quaternion.identity, 0, null);
+        objShield.GetComponent<TargetFollower>().Target = pTransform;
+        ShieldScript shield = objShield.GetComponent<ShieldScript>();
+        shield.Runner = GetRunner().GetComponent<PlayerRunner>();
+
+        objSpeed.GetComponent<TargetFollower>().Target = pTransform;
+        GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, multiplier);
+        GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, true);
+
+        while (!shield.IsDestroyed)
+        {
+            yield return null;
+        }
+
+        GetRunner().GetComponent<PhotonView>().RPC("SetShield", RpcTarget.All, false);
+        GetRunner().GetComponent<PhotonView>().RPC("SetSpeedBuff", RpcTarget.All, 1f);
+        Destroy(objSpeed);
+        Destroy(objShield);
         yield break;
     }
 
@@ -416,5 +449,6 @@ public enum SpellType
     Float,
     Speed,
     SuperSpeed,
+    ShieldSpeed,
 
 }
