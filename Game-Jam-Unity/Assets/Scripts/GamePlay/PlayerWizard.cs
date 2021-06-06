@@ -1,25 +1,24 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using GamePlay;
 using Photon.Pun;
 using Photon.Pun.Demo.Asteroids;
 using Photon.Pun.UtilityScripts;
-using Photon.Realtime;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class PlayerWizard : MonoBehaviourPunCallbacks
+public class PlayerWizard : MonoBehaviour
 {
     public float RotationSpeed = 90.0f;
     public float MovementSpeed = 2.0f;
     public float MaxSpeed = 0.2f;
     public UIWizardView m_pUIWizardView;
     public GameObject m_gVerticalSpellRoot;
+    public GameObject m_gAerialSpellRoot; // used to cast meteor from sky
 
     public WizardCastMagic WizardCastMagic;
-   
+
     public List<ElementType> Elements;
     public List<ElementType> SelectedElements;
     private PhotonView photonView;
@@ -92,21 +91,6 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         rigidbody.velocity = new Vector3(horizontal, 0, 0) * MovementSpeed * Time.fixedDeltaTime;
     }
 
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
-    {
-        base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
-
-        if (photonView.IsMine)
-        {
-            if (changedProps.ContainsKey(AsteroidsGame.PLAYER_ELEMENTS))
-            {
-                var elementType = (ElementType) changedProps[AsteroidsGame.PLAYER_ELEMENTS];
-                Elements.Add(elementType);
-                SyncElement();
-            }
-        }
-    }
-
     private void SelectElement()
     {
         ElementType element = GetElementType();
@@ -116,6 +100,7 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
             {
                 SelectedElements.Add(element);
                 Elements.Remove(element);
+                
                 SyncElement();
             }
         }
@@ -179,14 +164,14 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
                     break;
                 }
 
-            case SpellType.Fireball:
+            case SpellType.Meteor:
                 {
-                    coroutineView = m_pUIWizardView.ShowAreaOfEffect(m_gVerticalSpellRoot.transform.position, 3);
+                    coroutineView = m_pUIWizardView.ShowAreaOfEffect(m_gVerticalSpellRoot.transform.position, 5);
                     yield return StartCoroutine(coroutineView);
                     Vector3? targetPosition = (Vector3)coroutineView.Current;
                     if (targetPosition.HasValue)
                     {
-                        //CAST SPELL IN THE AREA
+                        yield return StartCoroutine(CastMeteor(targetPosition.Value));
                     }
                     m_bIsCasting = false;
                     break;
@@ -257,6 +242,23 @@ public class PlayerWizard : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(m_fFlameTornadoifeSpanTimeInSeconds);
         Destroy(obj);
     }
+
+    public IEnumerator CastMeteor(Vector3 pPosition)
+    {
+        yield return new WaitForSeconds(m_fCastTimeInSeconds);
+
+        GameObject obj = PhotonNetwork.InstantiateRoomObject("Meteor", m_gAerialSpellRoot.transform.position, Quaternion.identity, 0, null);
+        MeteorScript meteor = obj.GetComponent<MeteorScript>();
+        meteor.Target = pPosition;
+        obj.transform.LookAt(pPosition);
+
+        while (!meteor.IsDestroyed)
+        {
+            yield return null; //wait until meteor falls
+        }
+        Destroy(obj);
+        yield break;
+    }
     #endregion
     private GameObject GetRunner()
     {
@@ -272,7 +274,7 @@ public enum SpellType
 {
     None,
     Firebolt,
-    Fireball,
+    Meteor,
     Flamethrower,
     FireTornado,
 
